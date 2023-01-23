@@ -7,11 +7,12 @@
 * [X] Login page
   * [X] auth context
 * [X] private Routes
+* [X] stay signed in after reloading
 
 #### Style
 * [X] navbar
   * [X] background
-  * [ ] Links
+  * [X] Links
     * [X] hover
     * [X] active
 * [X] Button

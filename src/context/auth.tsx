@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
+import useLocalStorage from '../utils/useLocalStorage';
 
 interface AuthContextType {
     user: string;
@@ -14,13 +15,13 @@ interface Props {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: Props) => {
-    const [user, setUser] = useState("");
+    const [user, setUser] = useLocalStorage("user");
 
     const login = (user: string) => {
         setUser(user);
     }
 
-    const logout = (user: string) => {
+    const logout = () => {
         setUser("");
     }
 
