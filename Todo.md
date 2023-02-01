@@ -17,3 +17,16 @@
     * [X] active
 * [X] Button
 * [X] Login container
+
+### Step 2
+#### Logic
+* [X] Admin route
+  * [X] exercises list
+  * [X] exercise summary
+  * [X] admin auth
+
+#### Style
+* [X] links
+* [X] titles
+* [X] container
+* [X] exercise summary

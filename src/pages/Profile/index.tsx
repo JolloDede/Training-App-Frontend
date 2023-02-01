@@ -19,7 +19,7 @@ function Profile() {
         <>
             <Navbar activePage={ActivePage.Profile} />
             <PageTitle>This is the Profile page.</PageTitle>
-            <p>Welcome {auth?.user}</p>
+            <p>Welcome {auth?.user.name}</p>
             <Button onCLick={onClickhandler}>Logout</Button>
         </>
     )
