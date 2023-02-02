@@ -30,3 +30,14 @@
 * [X] titles
 * [X] container
 * [X] exercise summary
+
+### Step 3
+#### Logic
+* [X] add exercices
+  * [X] Button for adding
+  * [X] route for adding
+* [X] remove exercise
+* [X] handle no exercises
+* [X] muscles
+  * [X] add
+  * [X] remove

@@ -6,9 +6,16 @@ interface Props {
 }
 
 function Button({ onCLick, children }: Props) {
-
   return (
     <button onClick={onCLick} className="text-white bg-blue-700 hover:bg-blue-800 p-2 border rounded-lg">
+        {children}
+    </button>
+  )
+}
+
+export function RedButton({ onCLick, children }: Props) {
+  return (
+    <button onClick={onCLick} className="text-white bg-red-600 hover:bg-red-700 p-2 border rounded-lg">
         {children}
     </button>
   )

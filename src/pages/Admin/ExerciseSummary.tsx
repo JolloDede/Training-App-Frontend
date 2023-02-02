@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import SecondTitle from "../../components/SecondTitle";
-import { useExerciseArr } from "../../context/exercise";
+import { useExerciseCtx } from "../../context/exercise";
 
 function ExerciseSummary() {
-    const exerciseCtx = useExerciseArr();
+    const exerciseCtx = useExerciseCtx();
     const { id } = useParams();
     let activeExercise = exerciseCtx?.exercises[parseInt(id!)]!;
 
