@@ -5,7 +5,8 @@ import { Group, useAuth } from '../context/auth';
 export enum ActivePage {
     Home,
     Profile,
-    Admin
+    Admin,
+    Social
 }
 
 interface Props {
@@ -18,6 +19,7 @@ function Navbar({ activePage }: Props) {
     let homeClassname = activePage == ActivePage.Home ? tabsClassname + activeTabClassname : tabsClassname;
     let profileClassname = activePage == ActivePage.Profile ? tabsClassname + activeTabClassname : tabsClassname;
     let AdminClassname = activePage == ActivePage.Admin ? tabsClassname + activeTabClassname : tabsClassname;
+    let socialClassname = activePage == ActivePage.Social ? tabsClassname + activeTabClassname : tabsClassname;
     const auth = useAuth();
 
 
@@ -29,6 +31,9 @@ function Navbar({ activePage }: Props) {
                 </Link>
                 <Link to={"/profile"} className={profileClassname}>
                     Profile
+                </Link>
+                <Link to={"/social"} className={socialClassname}>
+                    Social
                 </Link>
                 {auth?.user.group == Group.Admin ? <Link to={"/admin"} className={AdminClassname} >Admin</Link> : ""}
             </div>

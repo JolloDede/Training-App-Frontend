@@ -20,6 +20,7 @@ export enum Group {
 interface User {
     name: string;
     group: Group;
+    team: number[];
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }: Props) => {
     const [user, setUser] = useLocalStorage("user");
 
     const login = (user: string) => {
-        setUser({ name: user, group: Group.Admin });
+        setUser({ name: user, group: Group.Admin, team: []});
     }
 
     const logout = () => {

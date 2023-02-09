@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
-import { Link, Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { Group, useAuth } from '../context/auth'
 
 function AdminRoutes() {

@@ -41,3 +41,16 @@
 * [X] muscles
   * [X] add
   * [X] remove
+
+### Step 4
+#### Logic
+* [X] Display Exercises on Home
+  * [X] user exercise list
+    * [X] render on homepage
+    * [X] buttons to show sets made
+* [X] user have a group list
+* [X] Social Tab for rendering Groups and members
+
+#### Step 5
+* [ ] backend
+  * [ ] login
