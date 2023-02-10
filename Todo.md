@@ -53,4 +53,6 @@
 
 #### Step 5
 * [ ] backend
-  * [ ] login
+  * [X] login
+  * [X] social tab
+    * [X] see the other in the team

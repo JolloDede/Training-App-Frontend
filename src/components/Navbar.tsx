@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Group, useAuth } from '../context/auth';
 
 export enum ActivePage {
@@ -21,7 +21,12 @@ function Navbar({ activePage }: Props) {
     let AdminClassname = activePage == ActivePage.Admin ? tabsClassname + activeTabClassname : tabsClassname;
     let socialClassname = activePage == ActivePage.Social ? tabsClassname + activeTabClassname : tabsClassname;
     const auth = useAuth();
+    const navigate = useNavigate();
 
+    function handleLogoutClick() {
+        auth?.logout();
+        navigate("/login");
+    }
 
     return (
         <nav className='flex py-6'>
@@ -38,9 +43,7 @@ function Navbar({ activePage }: Props) {
                 {auth?.user.group == Group.Admin ? <Link to={"/admin"} className={AdminClassname} >Admin</Link> : ""}
             </div>
             <div className='flex self-end'>
-                <Link to={"/login"} className="bg-white text-blue-500 hover:text-blue-800 px-4 py-2 mx-2 border rounded">
-                    Login
-                </Link>
+                <button onClick={handleLogoutClick} className='bg-white text-blue-500 hover:text-blue-800 px-4 py-2 mx-2 border rounded'>Logout</button>
             </div>
         </nav>
     )

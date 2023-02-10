@@ -1,4 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import axios from 'axios';
+import { createContext, useContext, useEffect } from 'react'
+import { LOGINURI } from '../assets/config';
 import useLocalStorage from '../utils/useLocalStorage';
 
 interface AuthContextType {
@@ -6,6 +8,7 @@ interface AuthContextType {
     login: Function;
     logout: Function;
     children?: React.ReactNode;
+    token: string;
 }
 
 interface Props {
@@ -23,13 +26,46 @@ interface User {
     team: number[];
 }
 
+interface UserResponse {
+    user: {
+        name: string;
+        group: number;
+        team: number[];
+    }
+    token: string;
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: Props) => {
     const [user, setUser] = useLocalStorage("user");
 
-    const login = (user: string) => {
-        setUser({ name: user, group: Group.Admin, team: []});
+    useEffect(() => {
+        if (user) {
+            axios.get("", {
+                headers: { 'Authorization': 'Bearer ' + user.token }
+            })
+                .catch(() => {
+                    setUser("");
+                })
+        }
+    }, [])
+
+    const login = async (user: string, password: string) => {
+        return await axios.post<UserResponse>(LOGINURI, {
+            params: {
+                username: user,
+                password
+            }
+        })
+            .then(response => {
+                const data = response.data;
+                setUser({ name: data.user.name, group: data.user.group, team: data.user.team, token: data.token });
+                return 200;
+            })
+            .catch(response => {
+                return response.status;
+            })
     }
 
     const logout = () => {
@@ -37,7 +73,7 @@ export const AuthProvider = ({ children }: Props) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, token: user.token }}>
             {children}
         </AuthContext.Provider>
     )
