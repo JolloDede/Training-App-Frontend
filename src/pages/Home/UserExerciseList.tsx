@@ -1,27 +1,15 @@
 import { useEffect } from "react";
 import Checkbox from "../../components/CheckBox";
 import { Exercise } from "../../context/exercise";
+import { ExerciseReps, useUserExercise } from "../../context/userExercise";
 import useLocalStorage from "../../utils/useLocalStorage";
 
-interface ExerciseReps {
-    exercise: Exercise;
-    repetitions: number;
-}
-
 function UserExerciseList() {
-    const [userExercises, setUserExercises] = useLocalStorage("user-exercise-list");
-
-    useEffect(() => {
-        let exerciseRep: ExerciseReps = {
-            exercise: { name: "Pullup", muscels: [{ muscle: { name: "Tryceps" }, percent: 20 }] },
-            repetitions: 10,
-        }
-        setUserExercises([exerciseRep])
-    }, [])
+    const userExerciseCtx = useUserExercise();
 
     return (
         <>
-            {userExercises.map((exRep: ExerciseReps, index: number) => (
+            {userExerciseCtx?.exercises.map((exRep: ExerciseReps, index: number) => (
                 <div key={index} className="flex border rounded-lg p-4 my-1">
                     <p className="flex my-auto">{exRep.exercise.name}</p>
                     <p className="flex justify-center m-auto">Repetitions: {exRep.repetitions}</p>

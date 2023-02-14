@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: Props) => {
     useEffect(() => {
         if (user) {
             axios.get("", {
-                headers: { 'Authorization': 'Bearer ' + user.token }
+                headers: { 'authorization': 'Bearer ' + user.token }
             })
                 .catch(() => {
                     setUser("");

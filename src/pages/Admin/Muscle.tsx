@@ -1,26 +1,38 @@
+import { useState } from "react";
 import Dropdown, { DropdownOption } from "../../components/Dropdown";
-import { MuscleUsage, useExerciseCtx } from "../../context/exercise";
+import { MuscleUsage, useMuscle } from "../../context/muscle";
 
 interface Props {
     muscleUsage: MuscleUsage;
+    update: Function;
+    id: number;
 }
 
-function Muscle({ muscleUsage }: Props) {
-    const ExerciseArr = useExerciseCtx();
+function Muscle({ muscleUsage, update, id }: Props) {
+    const muscleCtx = useMuscle();
 
     function dropOptions(): DropdownOption[] {
         let result: DropdownOption[] = [];
-        if (!ExerciseArr) return result;
-        for (let i = 0; i < ExerciseArr!.muscles.length; i++) {
-            result.push({ key: ExerciseArr!.muscles[i].name, value:  ExerciseArr!.muscles[i].name })
+        if (!muscleCtx) return result;
+        for (let i = 0; i < muscleCtx!.muscles.length; i++) {
+            result.push({ key: muscleCtx!.muscles[i]._id.toString(), value:  muscleCtx!.muscles[i].name })
         }
         return result;
     }
 
+    function handleChange(e: any) {
+        update(id, { muscle: muscleUsage.muscle, percent: e.target.value })
+    }
+
+    function handleDropdownChange(option: DropdownOption) {
+        const muscle = muscleCtx?.muscles.find(muscle => muscle.name == option.value)
+        update(id, { muscle: muscle, percent: muscleUsage.percent });
+    }
+
     return (
         <div>
-            <Dropdown placeholder="Select..." options={dropOptions()} />
-            <input type="number" defaultValue={muscleUsage.percent} />
+            <Dropdown placeholder="Select..." options={dropOptions()} onChange={(option: DropdownOption) => handleDropdownChange(option)} />
+            <input type="number" value={muscleUsage.percent} onChange={e => handleChange(e)} />
         </div>
     );
 }

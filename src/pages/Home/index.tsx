@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar, { ActivePage } from '../../components/Navbar'
 import PageTitle from '../../components/PageTitle'
+import { UserExerciseProvider } from '../../context/userExercise';
 import UserExerciseList from './UserExerciseList'
 
 function Home() {
@@ -14,7 +15,9 @@ function Home() {
     <>
       <Navbar activePage={ActivePage.Home} />
       <PageTitle>Home</PageTitle>
-      <UserExerciseList />
+      <UserExerciseProvider>
+        <UserExerciseList />
+      </UserExerciseProvider>
     </>
   )
 }

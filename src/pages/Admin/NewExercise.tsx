@@ -1,38 +1,54 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button, { RedButton } from "../../components/Button";
-import { MuscleUsage, useExerciseCtx } from "../../context/exercise";
+import { useExercise } from "../../context/exercise";
+import { MuscleUsage } from "../../context/muscle";
 import Muscle from "./Muscle";
-import MuscleList from "./MuscleList";
 
 function NewExercise() {
     const [name, setName] = useState("New Exercise");
+    const [errorMsg, setErrorMsg] = useState("");
     const [muscleUsageList, setMuscleUsageList] = useState<MuscleUsage[]>([]);
-    const exercise = useExerciseCtx();
+    const exercise = useExercise();
     const navigate = useNavigate();
 
     function addMusclesComp() {
         let newMuscleUsage: MuscleUsage = {
-            muscle: { name: "Tyceps" },
+            muscle: { _id: 0, name: "" },
             percent: 0,
         }
         setMuscleUsageList([...muscleUsageList, newMuscleUsage])
     }
 
-    function handleSaveClick() {
-        exercise?.addExercise({ name, muscels: muscleUsageList });
-        navigate(-1);
+    function editMuscleComp(index: number, newMuscleUsage: MuscleUsage) {
+        setMuscleUsageList(muscleUsageList.map((muscleUse, id) => {
+            if (id == index) {
+                return newMuscleUsage;
+            }
+            return muscleUse;
+        }))
+    }
+
+    async function handleSaveClick() {
+        const response = await exercise?.addExercise({ name, muscels: muscleUsageList });
+        if (response) {
+            console.log(response)
+            setErrorMsg(response.data.message);
+        } else {
+            navigate(-1);
+        }
     }
 
     return (
         <div className="border rounded-lg p-4">
+            <p className="flex text-red-600">{errorMsg}</p>
             <input type="text" value={name} onChange={e => setName(e.target.value)} className="text-3xl font-bold hover:border rounded-lg" />
             <br />
             <label>Muscles</label>
             <br />
             <button onClick={addMusclesComp} className="p-1 w-8 h-8 border rounded-lg">+</button>
             {muscleUsageList.map((muscleUsage, index) => (
-                <Muscle muscleUsage={muscleUsage} key={index} />
+                <Muscle muscleUsage={muscleUsage} update={editMuscleComp} id={index} key={index} />
             ))}
             <div className="mt-4">
                 <Button onCLick={handleSaveClick}>Save</Button>

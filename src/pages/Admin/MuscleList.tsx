@@ -2,23 +2,24 @@ import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import SecondTitle from "../../components/SecondTitle";
-import { Muscel, MuscleUsage, useExerciseCtx } from "../../context/exercise";
+import { useExercise } from "../../context/exercise";
+import { Muscel, useMuscle } from "../../context/muscle";
 import Muscle from "./Muscle";
 
 function MuscleList() {
     const navigate = useNavigate();
-    const exerciseCtx = useExerciseCtx();
+    const muscleCtx = useMuscle();
 
     function handleDelClick(e: MouseEvent, muscle: Muscel) {
         e.stopPropagation();
-        exerciseCtx?.removeMuscle(muscle);
+        muscleCtx?.removeMuscle(muscle);
     }
 
     return (
         <div>
             <SecondTitle>Muscle List</SecondTitle>
             <Button onCLick={() => navigate("new")}>New Muscle</Button>
-            {exerciseCtx?.muscles.map((muscle, index) => (
+            {muscleCtx?.muscles.map((muscle, index) => (
                 <div key={index} className="flex border rounded-lg p-4 my-1" >
                     <p className="flex select-none">{muscle.name}</p>
                     <div onClick={(e) => handleDelClick(e, muscle)} className="flex mr-0 ml-auto pt-1 cursor-pointer">

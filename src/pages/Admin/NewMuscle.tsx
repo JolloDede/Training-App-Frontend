@@ -1,28 +1,37 @@
 
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button, { RedButton } from "../../components/Button";
-import { MuscleUsage, useExerciseCtx } from "../../context/exercise";
-import Muscle from "./Muscle";
-import MuscleList from "./MuscleList";
+import { useExercise } from "../../context/exercise";
+import { useMuscle } from "../../context/muscle";
 
 function NewMuscle() {
     const [name, setName] = useState("New Muscle");
-    const exercise = useExerciseCtx();
+    const [errorMsg, setErrorMsg] = useState("");
+    const muscleCtx = useMuscle();
     const navigate = useNavigate();
 
-    function handleSaveClick() {
-        exercise?.addMuscle({ name });
-        navigate(-1);
+    async function handleSaveClick(e: MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+        const response = await muscleCtx?.addMuscle({ name })
+        if (response) {
+            console.log(response)
+            setErrorMsg(response.data.message);
+        } else {
+            navigate(-1);
+        }
     }
 
     return (
         <div className="border rounded-lg p-4">
-            <input type="text" value={name} onChange={e => setName(e.target.value)} className="text-3xl font-bold hover:border rounded-lg" />
-            <div className="mt-4">
-                <Button onCLick={handleSaveClick}>Save</Button>
-                <RedButton onCLick={() => navigate(-1)}>Cancle</RedButton>
-            </div>
+            <p className="flex text-red-600">{errorMsg}</p>
+            <form>
+                <input type="text" value={name} onChange={e => setName(e.target.value)} className="text-3xl font-bold hover:border rounded-lg" />
+                <div className="mt-4">
+                    <Button onCLick={(e: MouseEvent<HTMLButtonElement>) => handleSaveClick(e)}>Save</Button>
+                    <RedButton onCLick={(e: MouseEvent<HTMLButtonElement>) => { e.preventDefault(); navigate(-1) }}>Cancle</RedButton>
+                </div>
+            </form>
         </div>
     );
 }

@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Navbar, { ActivePage } from '../../components/Navbar';
 import PageTitle from '../../components/PageTitle';
 import { useAuth } from '../../context/auth'
+import { useExercise } from '../../context/exercise';
 
 
 function Profile() {
@@ -19,8 +19,13 @@ function Profile() {
         <>
             <Navbar activePage={ActivePage.Profile} />
             <PageTitle>This is the Profile page.</PageTitle>
-            <p>Welcome {auth?.user.name}</p>
-            <Button onCLick={onClickhandler}>Logout</Button>
+            <div className='flex'>
+                <p>Welcome {auth?.user.name}</p>
+                <Button className="justify-end mr-0 ml-auto" onCLick={onClickhandler}>Logout</Button>
+            </div>
+            <div>
+
+            </div>
         </>
     )
 }

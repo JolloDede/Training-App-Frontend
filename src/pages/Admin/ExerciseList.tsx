@@ -2,12 +2,12 @@ import { MouseEvent, MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import SecondTitle from "../../components/SecondTitle";
-import { Exercise, useExerciseCtx } from "../../context/exercise";
+import { Exercise, useExercise } from "../../context/exercise";
 import ExerciseSummary from "./ExerciseSummary";
 import Button from "../../components/Button";
 
 function ExerciseList() {
-    const exerciseCtx = useExerciseCtx()!;
+    const exerciseCtx = useExercise()!;
     const navigate = useNavigate();
 
     function handleDelClick(e: MouseEvent, ex: Exercise) {

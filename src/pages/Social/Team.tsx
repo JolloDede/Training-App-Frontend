@@ -33,7 +33,9 @@ function Team({ teamId }: Props) {
             </div>
             {members.map(member => (
                 <div key={member._id} className="ml-4 p-2 border rounded-lg">
-                    <p>{member.username}</p>
+                    {member.username == auth?.user.name ? 
+                    <p className="text-blue-400">You</p> :
+                    <p>{member.username}</p>}
                 </div>
             ))}
         </div>

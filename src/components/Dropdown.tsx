@@ -3,6 +3,7 @@ import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
 interface Props {
     placeholder: string;
     options: DropdownOption[];
+    onChange: Function;
 }
 
 export interface DropdownOption {
@@ -18,7 +19,7 @@ const Icon = () => {
     );
 };
 
-function Dropdown({ placeholder, options }: Props) {
+function Dropdown({ placeholder, options, onChange }: Props) {
     const [showMenu, setShowMenu] = useState(false);
     const [selectedValue, setSelectedValue] = useState<DropdownOption | null>(null);
 
@@ -41,6 +42,7 @@ function Dropdown({ placeholder, options }: Props) {
 
     function itemClickHandle(option: DropdownOption) {
         setSelectedValue(option);
+        onChange(option);
     }
 
     function isSelected(option: DropdownOption): boolean {
