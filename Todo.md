@@ -51,7 +51,7 @@
 * [X] user have a group list
 * [X] Social Tab for rendering Groups and members
 
-#### Step 5
+### Step 5
 * [X] backend
   * [X] login
   * [X] social tab
@@ -60,7 +60,10 @@
     * [X] add Exercise
     * [X] add muscle
 
-#### Step 6
+### Step 6
 * [ ] User exercises
   * [X] add
   * [ ] remove
+
+#### Rework
+* [X] Card for flex divs with borders
