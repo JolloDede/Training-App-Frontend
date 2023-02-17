@@ -14,7 +14,6 @@ function Social() {
             <Routes>
                 <Route path="/" element={<Teams />} />
                 {/* Todo add exercises to other users */}
-                <Route path="/:id" element={<Teams />} />
             </Routes>
         </>
     );

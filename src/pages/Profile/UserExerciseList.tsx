@@ -1,3 +1,4 @@
+import Card from "../../components/Card";
 import { useUserExercise } from "../../context/userExercise";
 
 function UserExerciseList() {
@@ -6,10 +7,10 @@ function UserExerciseList() {
     return (
         <>
             {userExerciseCtx?.exerciseReps.map((exerciseReps, index) => (
-                <div key={index} className="border rounded-lg p-4">
+                <Card key={index} classname="border rounded-lg p-4">
                     <p>{exerciseReps.exercise.name}</p>
-                    <p>{exerciseReps.repetitions}</p>
-                </div>
+                    <p className="justify-center mx-auto">{exerciseReps.repetitions}</p>
+                </Card>
             ))}
         </>
     );
