@@ -42,8 +42,14 @@ export const ExerciseProvider = ({ children }: Props) => {
         })
     }
 
-    function removeExercise(ex: Exercise) {
-        setExercise(exercises.filter((exercise: Exercise) => ex != exercise));
+    async function removeExercise(ex: Exercise) {
+        return await axios.delete(EXERCISEURI+"/"+ex._id,
+            { headers: { 'authorization': 'Bearer ' + auth?.token } 
+        }).then(response => {
+            setExercise(exercises.filter((exercise: Exercise) => exercise._id != response.data._id));
+        }).catch(err => {
+            return err.response;
+        })
     }
 
     return (

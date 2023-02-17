@@ -64,8 +64,8 @@
 * [ ] User exercises
   * [X] add
   * [ ] remove
-* [ ] remove
-  * [ ] exercises
+* [X] remove
+  * [X] exercises
   * [X] muscles
 
 #### Rework

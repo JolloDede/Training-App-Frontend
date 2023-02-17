@@ -1,9 +1,7 @@
-import { MouseEvent, MouseEventHandler } from "react";
+import { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import PageTitle from "../../components/PageTitle";
 import SecondTitle from "../../components/SecondTitle";
 import { Exercise, useExercise } from "../../context/exercise";
-import ExerciseSummary from "./ExerciseSummary";
 import Button from "../../components/Button";
 import Card from "../../components/Card";
 import Bin from "../../components/Bin";
@@ -12,9 +10,12 @@ function ExerciseList() {
     const exerciseCtx = useExercise()!;
     const navigate = useNavigate();
 
-    function handleDelClick(e: MouseEvent, ex: Exercise) {
+    async function handleDelClick(e: MouseEvent, exercise: Exercise) {
         e.stopPropagation();
-        exerciseCtx.removeExercise(ex);
+        const response = await exerciseCtx.removeExercise(exercise);;
+        if (response) {
+            console.log(response);
+        }
     }
 
     return (
