@@ -1,4 +1,4 @@
-import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import { MouseEvent, MouseEventHandler, useEffect, useRef, useState } from "react";
 
 interface Props {
     placeholder: string;
@@ -22,9 +22,14 @@ const Icon = () => {
 function Dropdown({ placeholder, options, onChange }: Props) {
     const [showMenu, setShowMenu] = useState(false);
     const [selectedValue, setSelectedValue] = useState<DropdownOption | null>(null);
+    const inputRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const handler = () => setShowMenu(false);
+        const handler = (e: any) => {
+            if (inputRef.current && !inputRef.current.contains(e.target)) {
+                setShowMenu(false);
+            }
+        };
 
         window.addEventListener("click", handler);
 
@@ -53,14 +58,13 @@ function Dropdown({ placeholder, options, onChange }: Props) {
         return selectedValue.value == option.value;
     }
 
-    function handleClick(e: MouseEvent) {
-        e.stopPropagation();
+    function handleClick() {
         setShowMenu(!showMenu);
     }
 
     return (
         <div className="relative text-left border rounded-lg w-fit cursor-pointer">
-            <div onClick={(e) => handleClick(e)} className="flex p-2">
+            <div ref={inputRef} onClick={handleClick} className="flex p-2">
                 <div className="pr-3 font-semibold select-none">{getDisplay()}</div>
                 <div>
                     <Icon />

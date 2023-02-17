@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/auth'
+import { UserExerciseProvider } from './context/userExercise'
 import Admin from './pages/Admin'
 import Home from './pages/Home'
 import Login from './pages/Login'

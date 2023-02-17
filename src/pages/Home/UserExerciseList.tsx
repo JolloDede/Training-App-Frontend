@@ -9,7 +9,7 @@ function UserExerciseList() {
 
     return (
         <>
-            {userExerciseCtx?.exercises.map((exRep: ExerciseReps, index: number) => (
+            {userExerciseCtx?.exerciseReps.map((exRep: ExerciseReps, index: number) => (
                 <div key={index} className="flex border rounded-lg p-4 my-1">
                     <p className="flex my-auto">{exRep.exercise.name}</p>
                     <p className="flex justify-center m-auto">Repetitions: {exRep.repetitions}</p>

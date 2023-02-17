@@ -9,7 +9,7 @@ interface Props {
 }
 
 export interface Muscel {
-    _id: number;
+    _id: string;
     name: string;
 }
 

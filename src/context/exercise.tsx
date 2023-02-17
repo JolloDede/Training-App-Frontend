@@ -10,6 +10,7 @@ interface Props {
 }
 
 export interface Exercise {
+    _id: string;
     name: string;
     muscels: MuscleUsage[];
 }

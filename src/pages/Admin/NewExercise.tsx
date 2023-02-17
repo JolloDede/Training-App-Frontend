@@ -14,7 +14,7 @@ function NewExercise() {
 
     function addMusclesComp() {
         let newMuscleUsage: MuscleUsage = {
-            muscle: { _id: 0, name: "" },
+            muscle: { _id: "", name: "" },
             percent: 0,
         }
         setMuscleUsageList([...muscleUsageList, newMuscleUsage])

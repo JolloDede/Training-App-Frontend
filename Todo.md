@@ -59,3 +59,8 @@
   * [X] cleanup
     * [X] add Exercise
     * [X] add muscle
+
+#### Step 6
+* [ ] User exercises
+  * [X] add
+  * [ ] remove

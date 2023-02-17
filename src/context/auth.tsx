@@ -21,6 +21,7 @@ export enum Group {
 }
 
 interface User {
+    _id: string;
     name: string;
     group: Group;
     team: number[];

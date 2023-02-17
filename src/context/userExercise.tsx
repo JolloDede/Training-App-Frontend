@@ -1,7 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import axios from 'axios';
+import { createContext, useContext } from 'react'
+import { USEREXERURI } from '../assets/config';
 import useLocalStorage from '../utils/useLocalStorage';
-import { Exercise } from './exercise';
-import { MuscleUsage } from './muscle';
+import { useAuth } from './auth';
+import { Exercise, useExercise } from './exercise';
 
 interface Props {
     children?: React.ReactNode;
@@ -13,26 +15,46 @@ export interface ExerciseReps {
 }
 
 interface ExerciseContextType {
-    exercises: ExerciseReps[];
+    exerciseReps: ExerciseReps[];
     addExercise: Function;
     removeExercise: Function;
+}
+
+interface AddExerciseProp {
+    exerciseId: string;
+    repetitions: number;
 }
 
 const UserExerciseContext = createContext<ExerciseContextType | null>(null);
 
 export const UserExerciseProvider = ({ children }: Props) => {
-    const [exercises, setExercise] = useLocalStorage("user-exercise-list");
+    const [userExercises, setUserExercise] = useLocalStorage("user-exercise-list");
+    const auth = useAuth();
+    const exerciseCtx = useExercise();
 
-    function addExercise(newExercise: Exercise) {
-        setExercise([...exercises, newExercise])
+    async function addExercise({ exerciseId, repetitions }: AddExerciseProp) {
+        return await axios.post(USEREXERURI, {
+            params: { 
+                exerciseId: exerciseId,
+                repetitions: repetitions,
+            }
+        },
+            { headers: { 'authorization': 'Bearer ' + auth?.token } 
+        }).then(response => {
+            const data = response.data;
+            const newUserExer = exerciseCtx?.exercises.filter(exercise => exercise._id = data.exerciseId);
+            setUserExercise([...userExercises, { exercise: newUserExer![0], repetitions: data.repetitions }]);
+        }).catch(err => {
+            return err.response;
+        })
     }
 
     function removeExercise(ex: Exercise) {
-        setExercise(exercises.filter((exercise: Exercise) => ex != exercise));
+        setUserExercise(userExercises.filter((exercise: Exercise) => ex != exercise));
     }
 
     return (
-        <UserExerciseContext.Provider value={{ exercises, addExercise, removeExercise }}>
+        <UserExerciseContext.Provider value={{ exerciseReps: userExercises, addExercise, removeExercise }}>
             {children}
         </UserExerciseContext.Provider>
     )
