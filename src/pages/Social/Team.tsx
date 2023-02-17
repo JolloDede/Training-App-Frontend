@@ -29,8 +29,8 @@ function Team({ teamId }: Props) {
     return (
         <Card classname="flex-col">
             <div onClick={() => handleTeamClick(teamId)} className="flex w-full mb-2">
-                <div className="flex">+</div>
-                <p className="flex justify-center mx-auto">{teamId}</p>
+                <div className="flex select-none">+</div>
+                <p className="flex justify-center mx-auto cursor-default">{teamId}</p>
             </div>
             {members.map(member => (
                 <div key={member._id} className="ml-4 my-1 p-2 border rounded-lg w-11/12">

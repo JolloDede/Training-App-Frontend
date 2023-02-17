@@ -64,10 +64,15 @@
 * [ ] User exercises
   * [X] add
   * [ ] remove
-* [X] remove
+* [X] backend remove 
   * [X] exercises
   * [X] muscles
 
 #### Rework
 * [X] Card for flex divs with borders
 * [X] Bin icon is a component
+
+#### Style
+* [X] Social
+  * [X] dont select +
+  * [X] teamname no hover
