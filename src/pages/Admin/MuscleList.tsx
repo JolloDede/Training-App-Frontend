@@ -12,9 +12,12 @@ function MuscleList() {
     const navigate = useNavigate();
     const muscleCtx = useMuscle();
 
-    function handleDelClick(e: MouseEvent, muscle: Muscel) {
+    async function handleDelClick(e: MouseEvent, muscle: Muscel) {
         e.stopPropagation();
-        muscleCtx?.removeMuscle(muscle);
+        const response = await muscleCtx?.removeMuscle(muscle);
+        if (response) {
+            console.log(response);
+        }
     }
 
     return (

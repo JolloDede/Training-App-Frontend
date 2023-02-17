@@ -64,6 +64,9 @@
 * [ ] User exercises
   * [X] add
   * [ ] remove
+* [ ] remove
+  * [ ] exercises
+  * [X] muscles
 
 #### Rework
 * [X] Card for flex divs with borders

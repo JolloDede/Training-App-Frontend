@@ -42,8 +42,14 @@ export const MuscleProvider = ({ children }: Props) => {
         })
     }
 
-    function removeMuscle(muc: Muscel) {
-        setMuscles(muscles.filter((mucel: Muscel) => muc != mucel));
+    async function removeMuscle(muc: Muscel) {
+        return await axios.delete(MUSCLEURI+"/"+muc._id,
+            { headers: { 'authorization': 'Bearer ' + auth?.token } 
+        }).then(response => {
+            setMuscles(muscles.filter((muscel: Muscel) => muscel._id != response.data._id));
+        }).catch(err => {
+            return err.response;
+        })
     }
 
     return (
