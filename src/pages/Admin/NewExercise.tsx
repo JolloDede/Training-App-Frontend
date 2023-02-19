@@ -30,7 +30,7 @@ function NewExercise() {
     }
 
     async function handleSaveClick() {
-        const response = await exercise?.addExercise({ name, muscels: muscleUsageList });
+        const response = await exercise?.addExercise({ name, muscles: muscleUsageList });
         if (response) {
             console.log(response)
             setErrorMsg(response.data.message);
