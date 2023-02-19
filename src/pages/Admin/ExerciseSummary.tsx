@@ -5,7 +5,7 @@ import { useExercise } from "../../context/exercise";
 function ExerciseSummary() {
     const exerciseCtx = useExercise();
     const { id } = useParams();
-    let activeExercise = exerciseCtx?.exercises[parseInt(id!)]!;
+    let activeExercise = exerciseCtx?.exercises.filter(exer => exer._id == id)[0]!;
 
     return (
         <div>
@@ -14,7 +14,7 @@ function ExerciseSummary() {
             <ul>
                 <li className="font-bold">Muscle usage:</li>
                 <ul className="list-disc list-inside">
-                    {activeExercise.muscels.map((musclePercent, index) => (
+                    {activeExercise.muscles.map((musclePercent, index) => (
                         <li key={index}>{musclePercent.muscle.name} {musclePercent.percent}</li>
                     ))}
                 </ul>

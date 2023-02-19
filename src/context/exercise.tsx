@@ -12,7 +12,7 @@ interface Props {
 export interface Exercise {
     _id: string;
     name: string;
-    muscels: MuscleUsage[];
+    muscles: MuscleUsage[];
 }
 
 interface ExerciseContextType {
@@ -31,7 +31,7 @@ export const ExerciseProvider = ({ children }: Props) => {
         return await axios.post(EXERCISEURI, {
             params: { 
                 name: newExercise.name,
-                muscles: newExercise.muscels,
+                muscles: newExercise.muscles,
             }
         },
             { headers: { 'authorization': 'Bearer ' + auth?.token } 

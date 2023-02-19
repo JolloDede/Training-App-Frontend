@@ -71,6 +71,8 @@
 #### Rework
 * [X] Card for flex divs with borders
 * [X] Bin icon is a component
+* [X] onclick
+  * [X] exercise
 
 #### Style
 * [X] Social

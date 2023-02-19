@@ -23,7 +23,7 @@ function ExerciseList() {
             <SecondTitle>Exercise List</SecondTitle>
             <Button onCLick={() => navigate("new")}>New Exercise</Button>
             {exerciseCtx.exercises.map((exer, index) => (
-                <Card key={index} onClick={() => navigate("" + index)}>
+                <Card key={index} onClick={() => navigate("" + exer._id)}>
                     <p className="flex select-none">{exer.name}</p>
                     <div onClick={(e) => handleDelClick(e, exer)} className="flex mr-0 ml-auto pt-1 cursor-pointer">
                         <Bin />
