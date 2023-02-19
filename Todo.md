@@ -76,3 +76,4 @@
 * [X] Social
   * [X] dont select +
   * [X] teamname no hover
+* [X] drop down not scroll x
