@@ -79,3 +79,14 @@
   * [X] dont select +
   * [X] teamname no hover
 * [X] drop down not scroll x
+* [X] Social hover
+
+### Step can wait but would be nice
+#### Rework
+* [ ] Context type Function declarations
+  * [ ] muscle
+    * [ ] muscle add
+    * [ ] muscle remove
+  * [ ] exercise
+    * [ ] exercise add
+    * [ ] exercise remove

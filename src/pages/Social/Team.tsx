@@ -33,7 +33,7 @@ function Team({ teamId }: Props) {
                 <p className="flex justify-center mx-auto cursor-default">{teamId}</p>
             </div>
             {members.map(member => (
-                <div key={member._id} className="ml-4 my-1 p-2 border rounded-lg w-11/12">
+                <div key={member._id} className="ml-4 my-1 p-2 border rounded-lg w-11/12 hover:bg-blue-50">
                     {member.username == auth?.user.name ? 
                     <p className="text-blue-400">You</p> :
                     <p>{member.username}</p>}
