@@ -61,9 +61,9 @@
     * [X] add muscle
 
 ### Step 6
-* [ ] User exercises
+* [X] User exercises
   * [X] add
-  * [ ] remove
+  * [X] remove
 * [X] backend remove 
   * [X] exercises
   * [X] muscles

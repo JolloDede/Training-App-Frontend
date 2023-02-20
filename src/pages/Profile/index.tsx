@@ -35,14 +35,14 @@ function Profile() {
             <div className='flex'>
                 <Button className='justify-center mx-auto' onCLick={handleNewExerciseCLick}>New Exercise</Button>
             </div>
-            <UserExerciseProvider>
-                <ExerciseProvider>
+            <ExerciseProvider>
+                <UserExerciseProvider>
                     {newUExerciseShow && <NewUserExercise displayNone={() => setNewUExerciseShow(false)} />}
-                </ExerciseProvider>
-                <div className='mt-2'>
-                    <UserExerciseList />
-                </div>
-            </UserExerciseProvider>
+                    <div className='mt-2'>
+                        <UserExerciseList />
+                    </div>
+                </UserExerciseProvider>
+            </ExerciseProvider>
         </>
     )
 }

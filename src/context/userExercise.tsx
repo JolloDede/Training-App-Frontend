@@ -10,6 +10,7 @@ interface Props {
 }
 
 export interface ExerciseReps {
+    _id: string;
     exercise: Exercise;
     repetitions: number;
 }
@@ -28,29 +29,39 @@ interface AddExerciseProp {
 const UserExerciseContext = createContext<ExerciseContextType | null>(null);
 
 export const UserExerciseProvider = ({ children }: Props) => {
-    const [userExercises, setUserExercise] = useLocalStorage<ExerciseReps[]>(LOCALSTORAGEPRESET+"user-exercise-list", []);
+    const [userExercises, setUserExercise] = useLocalStorage<ExerciseReps[]>(LOCALSTORAGEPRESET + "user-exercise-list", []);
     const auth = useAuth();
     const exerciseCtx = useExercise();
 
     async function addExercise({ exerciseId, repetitions }: AddExerciseProp) {
         return await axios.post(USEREXERURI, {
-            params: { 
+            params: {
                 exerciseId: exerciseId,
                 repetitions: repetitions,
             }
         },
-            { headers: { 'authorization': 'Bearer ' + auth?.token } 
-        }).then(response => {
-            const data = response.data;
-            const newUserExer = exerciseCtx?.exercises.filter(exercise => exercise._id = data.exerciseId);
-            setUserExercise([...userExercises, { exercise: newUserExer![0], repetitions: data.repetitions }]);
-        }).catch(err => {
-            return err.response;
-        })
+            {
+                headers: { 'authorization': 'Bearer ' + auth?.token }
+            }).then(response => {
+                const data = response.data;
+                const newUserExer = exerciseCtx?.exercises.filter(exercise => exercise._id == data.exerciseId);
+                setUserExercise([...userExercises, { _id: data._id, exercise: newUserExer![0], repetitions: data.repetitions }]);
+            }).catch(err => {
+                return err.response;
+            })
     }
 
-    function removeExercise(ex: Exercise) {
-        setUserExercise(userExercises.filter((exerciseReps: ExerciseReps) => ex != exerciseReps.exercise));
+    async function removeExercise(ex: ExerciseReps) {
+        // setUserExercise(userExercises.filter((exerciseReps: ExerciseReps) => ex != exerciseReps));
+
+        return await axios.delete(USEREXERURI + "/" + ex._id,
+            {
+                headers: { 'authorization': 'Bearer ' + auth?.token }
+            }).then(response => {
+                setUserExercise(userExercises.filter((exercise: ExerciseReps) => exercise._id != response.data._id));
+            }).catch(err => {
+                return err.response;
+            });
     }
 
     return (

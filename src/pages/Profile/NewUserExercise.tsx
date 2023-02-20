@@ -11,34 +11,32 @@ interface Props {
 }
 
 function NewUserExercise({ displayNone }: Props) {
-    const [exercise, setExercise] = useState<number>();
+    const [exercise, setExercise] = useState("");
     const [repetitions, setRepetitions] = useState<number>(10);
     const [errorMsg, setErrorMsg] = useState("");
     const exerciseCtx = useExercise();
     const userExerciseCtx = useUserExercise();
-    const navigate = useNavigate();
 
     function dropOptions(): DropdownOption[] {
         let result: DropdownOption[] = [];
         if (!exerciseCtx) return result;
         for (let i = 0; i < exerciseCtx!.exercises.length; i++) {
-            result.push({ key: exerciseCtx!.exercises[i]._id.toString(), value: exerciseCtx!.exercises[i].name })
+            result.push({ key: exerciseCtx!.exercises[i]._id, value: exerciseCtx!.exercises[i].name })
         }
         return result;
     }
 
     function handleDropdownChange(option: DropdownOption) {
-        setExercise(parseInt(option.key));
+        setExercise(option.key);
     }
 
     async function handleSaveClick() {
         const response = await userExerciseCtx?.addExercise({ exerciseId: exercise, repetitions });
-        console.log(response)
         if (response) {
             console.log(response)
             setErrorMsg(response.data.message);
-        } else {
-            navigate(0);
+        }else {
+            displayNone();
         }
     }
 
