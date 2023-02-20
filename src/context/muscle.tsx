@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
-import { MUSCLEURI } from '../assets/config';
+import { LOCALSTORAGEPRESET, MUSCLEURI } from '../assets/config';
 import { useAuth } from './auth';
 
 interface Props {
@@ -27,7 +27,7 @@ interface MuscleContextType {
 const MuscleContext = createContext<MuscleContextType | null>(null);
 
 export const MuscleProvider = ({ children }: Props) => {
-    const [muscles, setMuscles] = useLocalStorage<Muscel[]>("muscle-list", []);
+    const [muscles, setMuscles] = useLocalStorage<Muscel[]>(LOCALSTORAGEPRESET+"muscle-list", []);
     const auth = useAuth();
 
     async function addMuscle(newMucel: Muscel) {

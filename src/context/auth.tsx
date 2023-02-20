@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts';
-import { LOGINURI } from '../assets/config';
+import { LOCALSTORAGEPRESET, LOGINURI } from '../assets/config';
 
 interface AuthContextType {
     user: User;
@@ -40,7 +40,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 const initialUser = { user: { name: "", group: 0, team: [0] }, token: "" };
 
 export const AuthProvider = ({ children }: Props) => {
-    const [userResponse, setUserResponse] = useLocalStorage<UserResponse>("user", initialUser);
+    const [userResponse, setUserResponse] = useLocalStorage<UserResponse>(LOCALSTORAGEPRESET+"user", initialUser);
 
     useEffect(() => {
         if (userResponse) {

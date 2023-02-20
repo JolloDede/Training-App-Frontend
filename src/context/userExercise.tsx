@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createContext, useContext } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
-import { USEREXERURI } from '../assets/config';
+import { LOCALSTORAGEPRESET, USEREXERURI } from '../assets/config';
 import { useAuth } from './auth';
 import { Exercise, useExercise } from './exercise';
 
@@ -28,7 +28,7 @@ interface AddExerciseProp {
 const UserExerciseContext = createContext<ExerciseContextType | null>(null);
 
 export const UserExerciseProvider = ({ children }: Props) => {
-    const [userExercises, setUserExercise] = useLocalStorage<ExerciseReps[]>("user-exercise-list", []);
+    const [userExercises, setUserExercise] = useLocalStorage<ExerciseReps[]>(LOCALSTORAGEPRESET+"user-exercise-list", []);
     const auth = useAuth();
     const exerciseCtx = useExercise();
 
