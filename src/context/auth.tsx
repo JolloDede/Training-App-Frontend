@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect } from 'react'
+import { useLocalStorage } from 'usehooks-ts';
 import { LOGINURI } from '../assets/config';
-import useLocalStorage from '../utils/useLocalStorage';
 
 interface AuthContextType {
     user: User;
@@ -21,7 +21,6 @@ export enum Group {
 }
 
 interface User {
-    _id: string;
     name: string;
     group: Group;
     team: number[];
@@ -38,16 +37,18 @@ interface UserResponse {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const initialUser = { user: { name: "", group: 0, team: [0] }, token: "" };
+
 export const AuthProvider = ({ children }: Props) => {
-    const [user, setUser] = useLocalStorage("user");
+    const [userResponse, setUserResponse] = useLocalStorage<UserResponse>("user", initialUser);
 
     useEffect(() => {
-        if (user) {
+        if (userResponse) {
             axios.get("", {
-                headers: { 'authorization': 'Bearer ' + user.token }
+                headers: { 'authorization': 'Bearer ' + userResponse.token }
             })
                 .catch(() => {
-                    setUser("");
+                    setUserResponse(initialUser);
                 })
         }
     }, [])
@@ -61,7 +62,7 @@ export const AuthProvider = ({ children }: Props) => {
         })
             .then(response => {
                 const data = response.data;
-                setUser({ name: data.user.name, group: data.user.group, team: data.user.team, token: data.token });
+                setUserResponse({ user: { name: data.user.name, group: data.user.group, team: data.user.team }, token: data.token });
                 return 200;
             })
             .catch(response => {
@@ -70,11 +71,11 @@ export const AuthProvider = ({ children }: Props) => {
     }
 
     const logout = () => {
-        setUser("");
+        setUserResponse(initialUser);
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, token: user.token }}>
+        <AuthContext.Provider value={{ user: userResponse.user, login, logout, token: userResponse.token }}>
             {children}
         </AuthContext.Provider>
     )
