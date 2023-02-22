@@ -81,6 +81,19 @@
 * [X] drop down not scroll x
 * [X] Social hover
 
+### Step 7
+* [X] social admins can add and delete exercises to users
+  * [X] onClick on member of a team
+  * [X] Social tab user summary render
+
+#### Style
+* [ ] mobile
+  * [ ] login
+  * [ ] admin
+  * [ ] social
+  * [ ] profile
+  * [ ] home
+
 ### Step can wait but would be nice
 #### Rework
 * [ ] Context type Function declarations

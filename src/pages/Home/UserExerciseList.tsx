@@ -3,7 +3,6 @@ import Card from "../../components/Card";
 import Checkbox from "../../components/CheckBox";
 import { Exercise } from "../../context/exercise";
 import { ExerciseReps, useUserExercise } from "../../context/userExercise";
-import useLocalStorage from "../../utils/useLocalStorage";
 
 function UserExerciseList() {
     const userExerciseCtx = useUserExercise();

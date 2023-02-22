@@ -24,6 +24,7 @@ interface ExerciseContextType {
 interface AddExerciseProp {
     exerciseId: string;
     repetitions: number;
+    userId?: string;
 }
 
 const UserExerciseContext = createContext<ExerciseContextType | null>(null);
@@ -33,12 +34,14 @@ export const UserExerciseProvider = ({ children }: Props) => {
     const auth = useAuth();
     const exerciseCtx = useExercise();
 
-    async function addExercise({ exerciseId, repetitions }: AddExerciseProp) {
+    async function addExercise({ exerciseId, repetitions, userId }: AddExerciseProp) {
+        const params = {
+            exerciseId: exerciseId,
+            repetitions: repetitions,
+            userId: userId || "",
+        }
         return await axios.post(USEREXERURI, {
-            params: {
-                exerciseId: exerciseId,
-                repetitions: repetitions,
-            }
+            params
         },
             {
                 headers: { 'authorization': 'Bearer ' + auth?.token }
@@ -52,7 +55,6 @@ export const UserExerciseProvider = ({ children }: Props) => {
     }
 
     async function removeExercise(ex: ExerciseReps) {
-        // setUserExercise(userExercises.filter((exerciseReps: ExerciseReps) => ex != exerciseReps));
 
         return await axios.delete(USEREXERURI + "/" + ex._id,
             {
