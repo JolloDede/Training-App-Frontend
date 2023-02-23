@@ -94,7 +94,8 @@
   * [ ] admin
   * [ ] social
   * [ ] profile
-  * [ ] home
+  * [X] home
+    * [X] wrap sets
 
 ### Step can wait but would be nice
 #### Rework
