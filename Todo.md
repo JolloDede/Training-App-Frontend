@@ -94,6 +94,7 @@
   * [ ] admin
   * [ ] social
   * [ ] profile
+    * [X] remove logout btn
   * [X] home
     * [X] wrap sets
 
