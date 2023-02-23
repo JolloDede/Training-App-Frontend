@@ -24,19 +24,23 @@ function Login() {
   }
 
   return (
-    <div className='container grid place-items-center'>
-      <PageTitle>This is the Login page</PageTitle>
-      <p className='text-red-700 font-bold'>{errorMsg}</p>
-      <form>
-        <label>Username:<br />
-          <TextInput value={uname} onChange={e => setUname(e.target.value)} />
-        </label>
-        <br />
-        <label>Password:<br />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="border border-zinc-200 rounded-lg" />
-        </label>
-        <Button onCLick={(e: MouseEvent<HTMLButtonElement>) => onClickhandler(e)}>Submit</Button>
-      </form>
+    <div className='flex flex-col items-center'>
+      <PageTitle>Training app</PageTitle>
+      <div className='container p-8 space-y-2 bg-slate-200 rounded-lg shadow'>
+        <PageTitle>Sign in to your Account</PageTitle>
+        <p className='text-red-700 font-bold'>{errorMsg}</p>
+        <form className='space-y-4'>
+          <div>
+            <label className='block'>Username</label>
+            <TextInput value={uname} onChange={e => setUname(e.target.value)} />
+          </div>
+          <div>
+            <label className='block'>Password</label>
+            <TextInput password={true} value={password} onChange={e => setPassword(e.target.value)} />
+          </div>
+          <Button onCLick={(e: MouseEvent<HTMLButtonElement>) => onClickhandler(e)}>Submit</Button>
+        </form>
+      </div>
     </div>
   )
 }

@@ -88,7 +88,9 @@
 
 #### Style
 * [ ] mobile
-  * [ ] login
+  * [X] login
+    * [X] Input fields whole width
+    * [X] SubmitBtn on a new Line
   * [ ] admin
   * [ ] social
   * [ ] profile
