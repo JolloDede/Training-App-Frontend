@@ -1,7 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = import.meta.env.REACT_APP_BASE_URL;
-console.log(import.meta.env.REACT_APP_BASE_URL);
+axios.defaults.baseURL = window.location.hostname === "localhost"? "http://localhost:3000/": "https://training-app-backend.vercel.app";
 
 export const LOGINURI = "auth/login";
 export const MUSCLEURI = "assets/muscles";
