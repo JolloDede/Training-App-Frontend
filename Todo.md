@@ -85,6 +85,8 @@
 * [X] social admins can add and delete exercises to users
   * [X] onClick on member of a team
   * [X] Social tab user summary render
+* [X] rdy for live
+  * [X] env for backend uri
 
 #### Style
 * [ ] mobile
