@@ -1,6 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_BASE_URL;
+console.log(import.meta.env.VITE_APP_BASE_URL);
 
 export const LOGINURI = "auth/login";
 export const MUSCLEURI = "assets/muscles";
