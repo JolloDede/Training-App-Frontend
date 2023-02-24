@@ -89,7 +89,7 @@
   * [X] env for backend uri
 
 #### Style
-* [ ] mobile
+* [X] mobile
   * [X] login
     * [X] Input fields whole width
     * [X] SubmitBtn on a new Line
