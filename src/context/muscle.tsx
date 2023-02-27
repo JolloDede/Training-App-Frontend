@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
 import { LOCALSTORAGEPRESET, MUSCLEURI } from '../assets/config';
@@ -8,20 +8,24 @@ interface Props {
     children?: React.ReactNode;
 }
 
-export interface Muscel {
+export type Muscel = {
     _id: string;
     name: string;
 }
 
-export interface MuscleUsage {
+export type NewMuscel = {
+    name: string;
+}
+
+export type MuscleUsage = {
     muscle: Muscel;
     percent: number;
 }
 
 interface MuscleContextType {
     muscles: Muscel[];
-    addMuscle: Function;
-    removeMuscle: Function;
+    addMuscle: (newMuscle: NewMuscel) => Promise<AxiosResponse> ;
+    removeMuscle: (muscle: Muscel) => Promise<AxiosResponse>;
 }
 
 const MuscleContext = createContext<MuscleContextType | null>(null);
@@ -30,7 +34,7 @@ export const MuscleProvider = ({ children }: Props) => {
     const [muscles, setMuscles] = useLocalStorage<Muscel[]>(LOCALSTORAGEPRESET+"muscle-list", []);
     const auth = useAuth();
 
-    async function addMuscle(newMucel: Muscel) {
+    async function addMuscle(newMucel: NewMuscel) {
         return await axios.post(MUSCLEURI, {
             params: { name: newMucel.name }
         },
@@ -49,7 +53,7 @@ export const MuscleProvider = ({ children }: Props) => {
             setMuscles(muscles.filter((muscel: Muscel) => muscel._id != response.data._id));
         }).catch(err => {
             return err.response;
-        })
+        });
     }
 
     return (

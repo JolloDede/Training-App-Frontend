@@ -106,9 +106,9 @@
   * [ ] muscle
     * [ ] muscle add
     * [ ] muscle remove
-  * [ ] exercise
-    * [ ] exercise add
-    * [ ] exercise remove
+  * [X] exercise
+    * [X] exercise add
+    * [X] exercise remove
   * [X] auth
     * [X] login
     * [X] login
