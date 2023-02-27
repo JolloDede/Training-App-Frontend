@@ -14,11 +14,12 @@ function Login() {
 
   async function onClickhandler(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (await auth.login(uname, password) == 200) {
+    const res = await auth.login(uname, password);
+    if (res == 200) {
       navigate("/");
     } else {
-      console.log(await auth.login(uname, password));
-      setErrorMsg("Unable to Login");
+      console.log(res);
+      setErrorMsg("Unable to Login "+res);
       setPassword("");
     }
   }

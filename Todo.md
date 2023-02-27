@@ -102,10 +102,13 @@
 
 ### Step can wait but would be nice
 #### Rework
-* [ ] Context type Function declarations
+* [ ] interface Function declarations
   * [ ] muscle
     * [ ] muscle add
     * [ ] muscle remove
   * [ ] exercise
     * [ ] exercise add
     * [ ] exercise remove
+  * [X] auth
+    * [X] login
+    * [X] login

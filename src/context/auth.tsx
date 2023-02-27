@@ -5,8 +5,8 @@ import { LOCALSTORAGEPRESET, LOGINURI } from '../assets/config';
 
 interface AuthContextType {
     user: User;
-    login: Function;
-    logout: Function;
+    login: (user: string, password: string) => Promise<number>;
+    logout: () => void;
     children?: React.ReactNode;
     token: string;
 }
@@ -20,13 +20,13 @@ export enum Group {
     User
 }
 
-interface User {
+type User = {
     name: string;
     group: Group;
     team: number[];
 }
 
-interface UserResponse {
+type UserResponse = {
     user: {
         name: string;
         group: number;
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: Props) => {
         }
     }, [])
 
-    const login = async (user: string, password: string) => {
+    async function login(user: string, password: string) {
         return await axios.post<UserResponse>(LOGINURI, {
             params: {
                 username: user,
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }: Props) => {
             })
     }
 
-    const logout = () => {
+    function logout() {
         setUserResponse(initialUser);
     }
 
