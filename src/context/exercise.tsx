@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
 import { EXERCISEURI, LOCALSTORAGEPRESET } from '../assets/config';
@@ -9,16 +9,22 @@ interface Props {
     children?: React.ReactNode;
 }
 
-export interface Exercise {
+export type Exercise = {
     _id: string;
     name: string;
     muscles: MuscleUsage[];
 }
 
+export type NewExercise = {
+    name: string;
+    muscles: MuscleUsage[];
+}
+
+
 interface ExerciseContextType {
     exercises: Exercise[];
-    addExercise: Function;
-    removeExercise: Function;
+    addExercise: (newExercise: NewExercise) => Promise<AxiosResponse>;
+    removeExercise: (exercise: Exercise) => Promise<AxiosResponse>;
 }
 
 const ExerciseContext = createContext<ExerciseContextType | null>(null);
@@ -27,7 +33,7 @@ export const ExerciseProvider = ({ children }: Props) => {
     const [exercises, setExercise] = useLocalStorage<Exercise[]>(LOCALSTORAGEPRESET+"exercise-list", []);
     const auth = useAuth();
 
-    async function addExercise(newExercise: Exercise) {
+    async function addExercise(newExercise: NewExercise) {
         return await axios.post(EXERCISEURI, {
             params: { 
                 name: newExercise.name,

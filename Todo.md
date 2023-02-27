@@ -102,10 +102,10 @@
 
 ### Step can wait but would be nice
 #### Rework
-* [ ] interface Function declarations
-  * [ ] muscle
-    * [ ] muscle add
-    * [ ] muscle remove
+* [X] interface Function declarations
+  * [X] muscle
+    * [X] muscle add
+    * [X] muscle remove
   * [X] exercise
     * [X] exercise add
     * [X] exercise remove
