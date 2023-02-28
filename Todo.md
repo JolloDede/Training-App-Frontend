@@ -100,7 +100,6 @@
   * [X] home
     * [X] wrap sets
 
-### Step can wait but would be nice
 #### Rework
 * [X] interface Function declarations
   * [X] muscle
@@ -112,3 +111,9 @@
   * [X] auth
     * [X] login
     * [X] login
+
+### Step 8
+* [X] sync button
+  * [X] sync muscles
+  * [X] sync exercises
+  * [X] sync user exercises
