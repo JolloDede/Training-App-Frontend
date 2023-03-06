@@ -27,7 +27,7 @@ function WorkoutCard({ workout }: Props) {
     return (
         <Card classname="flex-col border rounded-lg p-4">
             <div className="flex flex-row">
-                <div onClick={handleExpandClick}><ExpandIcon /></div>
+                <div onClick={handleExpandClick}><ExpandIcon classname={!displayExercises? "-rotate-90" : ""} /></div>
                 <p className="flex">{workout.name}</p>
                 <div onClick={(e) => handleDelClick(e, workout)} className="flex ml-auto justify-end cursor-pointer">
                     <Bin />
