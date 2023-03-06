@@ -138,3 +138,7 @@
     * [X] workout list
   * [X] Home
     * [X] workout list with sets and reps
+
+#### Fix
+* [ ] New exercise form instead of div for wrapper
+* [ ] new muscle rework form submit

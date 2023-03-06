@@ -11,8 +11,7 @@ function NewMuscle() {
     const muscleCtx = useMuscle();
     const navigate = useNavigate();
 
-    async function handleSaveClick(e: MouseEvent<HTMLButtonElement>) {
-        e.preventDefault();
+    async function handleSaveClick() {
         const response = await muscleCtx?.addMuscle({ name })
         if (response) {
             console.log(response)
@@ -25,11 +24,11 @@ function NewMuscle() {
     return (
         <div className="border rounded-lg p-4">
             <p className="flex text-red-600">{errorMsg}</p>
-            <form>
+            <form onSubmit={e => e.preventDefault()}>
                 <input type="text" value={name} onChange={e => setName(e.target.value)} className="text-3xl font-bold hover:border rounded-lg" />
                 <div className="mt-4">
-                    <Button onCLick={(e: MouseEvent<HTMLButtonElement>) => handleSaveClick(e)}>Save</Button>
-                    <RedButton onCLick={(e: MouseEvent<HTMLButtonElement>) => { e.preventDefault(); navigate(-1) }}>Cancle</RedButton>
+                    <Button onCLick={handleSaveClick}>Save</Button>
+                    <RedButton onCLick={() => navigate(-1) }>Cancle</RedButton>
                 </div>
             </form>
         </div>
