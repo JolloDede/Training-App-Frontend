@@ -129,10 +129,10 @@
   * [ ] remove exercise from workout
   * [X] sync workouts
   * [X] navbar
-  * [ ] Social
-    * [ ] new workout
-    * [ ] workoutcomp
-  * [ ] Profile
+  * [X] Social
+    * [X] new workout
+    * [X] workoutcomp
+  * [X] Profile
     * [X] new workout
     * [X] workoutCard
     * [X] workout list
@@ -140,5 +140,5 @@
     * [X] workout list with sets and reps
 
 #### Fix
-* [ ] New exercise form instead of div for wrapper
-* [ ] new muscle rework form submit
+* [X] New exercise form instead of div for wrapper
+* [X] new muscle rework form submit

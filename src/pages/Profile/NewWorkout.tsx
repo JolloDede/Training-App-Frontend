@@ -1,14 +1,14 @@
 import { MouseEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useExercise } from "../../context/exercise";
 import { ExerciseReps, useWorkout } from "../../context/workout";
 import Bin from "../../components/Bin";
 import Button, { RedButton } from "../../components/Button";
 import Card from "../../components/Card";
 import Dropdown, { DropdownOption } from "../../components/Dropdown";
-import TextInput from "../../components/TextInput";
 
 function NewWorkout() {
+    const { id } = useParams();
     const navigate = useNavigate();
     const workoutCtx = useWorkout();
     const exerciseCtx = useExercise()!;
@@ -35,7 +35,8 @@ function NewWorkout() {
     }
 
     async function handleSaveClick() {
-        const response = await workoutCtx?.add({ name, exercises: exerciseRepsList });
+        const response = id ? await workoutCtx?.add({ name, exercises: exerciseRepsList, userId: id }) :
+            await workoutCtx?.add({ name, exercises: exerciseRepsList });
         if (response) {
             console.log(response)
             setErrorMsg(response.data.message);

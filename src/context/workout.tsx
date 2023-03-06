@@ -65,6 +65,7 @@ export const WorkoutProvider = ({ children }: Props) => {
         }, {
             headers: { 'authorization': 'Bearer ' + auth?.token }
         }).then(response => {
+            if (userId) return;
             setWorkouts([...workouts, { _id: response.data._id, name: response.data.name, exercises: exerciseFactory(response.data.exercises) }]);
         }).catch(err => {
             return err.response;

@@ -1,14 +1,12 @@
 import axios from "axios";
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { USERURI } from "../../assets/config";
 import { useAuth } from "../../context/auth";
-import { Exercise, useExercise } from "../../context/exercise";
 import SecondTitle from "../../components/SecondTitle";
 import Button from "../../components/Button";
-// import NewUserExercise from "../Profile/NewUserExercise";
-// import UserExerciseComp from "../Profile/UserExerciseComp";
 import { useWorkout, Workout } from "../../context/workout";
+import WorkoutCard from "../Profile/WorkoutCard";
 
 interface User {
     _id: string;
@@ -19,7 +17,6 @@ function User() {
     const { id } = useParams();
     const [user, setUser] = useState<User>();
     const [workouts, setWorkouts] = useState<Workout[]>([]);
-    const [newExer, setNewExer] = useState(false);
     const navigate = useNavigate();
     const auth = useAuth();
     const workoutCtx = useWorkout()!;
@@ -35,9 +32,9 @@ function User() {
                 let workoutList: Workout[] = [];
                 for (let i = 0; i < data.workouts.length; i++) {
                     workoutList.push({
-                        _id: data[i]._id,
-                        name: data[i].name,
-                        exercises: workoutCtx?.findExercises(data[i].exercises),
+                        _id: data.workouts[i]._id,
+                        name: data.workouts[i].name,
+                        exercises: workoutCtx?.findExercises(data.workouts[i].exercises),
                     });
                 }
                 setWorkouts(workoutList);
@@ -45,7 +42,7 @@ function User() {
     }, []);
 
     function handleOnClick() {
-        setNewExer(true);
+        navigate("newworkout");
     }
 
     return (
@@ -53,11 +50,10 @@ function User() {
             <h1>Hallo {user?.username}</h1>
             <div>
                 <SecondTitle>Exercises</SecondTitle>
-                <Button onCLick={handleOnClick}>Add Exercise</Button>
-                {/* {newExer && <NewUserExercise displayNone={() => { setNewExer(false); navigate(0) }} />} */}
-                {/* {workouts && workouts.map(exerRep => (
-                    <UserExerciseComp key={exerRep._id} exerciseRepetition={exerRep} />
-                ))} */}
+                <Button onCLick={handleOnClick}>Add Workout</Button>
+                {workouts && workouts.map(workout => (
+                    <WorkoutCard key={workout._id} workout={workout} />
+                ))}
             </div>
         </div>
     );
