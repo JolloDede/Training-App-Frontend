@@ -11,7 +11,6 @@ interface Props {
 }
 
 export type ExerciseReps = {
-    _id: string;
     exercise: Exercise;
     repetitions: number;
 }
@@ -31,8 +30,8 @@ type GetExerciseResponse = {
 
 interface ExerciseContextType {
     exerciseReps: ExerciseReps[];
-    addExercise: (exerciseProp: AddExerciseProp) => Promise<AxiosResponse>;
-    removeExercise: (ex: ExerciseReps) => Promise<AxiosResponse>;
+    addExercise: Function // : (exerciseProp: AddExerciseProp) => Promise<AxiosResponse>;
+    removeExercise: Function// : (ex: ExerciseReps) => Promise<AxiosResponse>;
     sync: () => void;
 }
 
@@ -48,48 +47,48 @@ export const UserExerciseProvider = ({ children }: Props) => {
     }
 
     async function addExercise({ exerciseId, repetitions, userId }: AddExerciseProp) {
-        const params = {
-            exerciseId: exerciseId,
-            repetitions: repetitions,
-            userId: userId || "",
-        }
-        return await axios.post(USEREXERURI, {
-            params
-        },
-            {
-                headers: { 'authorization': 'Bearer ' + auth?.token }
-            }).then(response => {
-                const data = response.data;
-                setUserExercise([...userExercises, { _id: data._id, exercise: exerciseFactory(data.exerciseId), repetitions: data.repetitions }]);
-            }).catch(err => {
-                return err.response;
-            })
+        // const params = {
+        //     exerciseId: exerciseId,
+        //     repetitions: repetitions,
+        //     userId: userId || "",
+        // }
+        // return await axios.post(USEREXERURI, {
+        //     params
+        // },
+        //     {
+        //         headers: { 'authorization': 'Bearer ' + auth?.token }
+        //     }).then(response => {
+        //         const data = response.data;
+        //         setUserExercise([...userExercises, { _id: data._id, exercise: exerciseFactory(data.exerciseId), repetitions: data.repetitions }]);
+        //     }).catch(err => {
+        //         return err.response;
+            // })
     }
 
     async function removeExercise(ex: ExerciseReps) {
-        return await axios.delete(USEREXERURI + "/" + ex._id,
-            {
-                headers: { 'authorization': 'Bearer ' + auth?.token }
-            }).then(response => {
-                setUserExercise(userExercises.filter((exercise: ExerciseReps) => exercise._id != response.data._id));
-            }).catch(err => {
-                return err.response;
-            });
+        // return await axios.delete(USEREXERURI + "/" + ex._id,
+        //     {
+        //         headers: { 'authorization': 'Bearer ' + auth?.token }
+        //     }).then(response => {
+        //         setUserExercise(userExercises.filter((exercise: ExerciseReps) => exercise._id != response.data._id));
+        //     }).catch(err => {
+        //         return err.response;
+        //     });
     }
 
     function sync() {
-        axios.get(USEREXERURI,
-            {
-                headers: { 'authorization': 'Bearer ' + auth?.token }
-            }).then(response => {
-                let userExerRep: ExerciseReps[] = [];
-                for (let i = 0; i < response.data.length; i++) {
-                    const exRep: GetExerciseResponse = response.data[i];
-                    console.log(exerciseFactory(exRep.exerciseId));
-                    userExerRep.push({ _id: exRep._id, exercise: exerciseFactory(exRep.exerciseId), repetitions: exRep.repetitions })
-                }
-                setUserExercise(userExerRep);
-            })
+        // axios.get(USEREXERURI,
+        //     {
+        //         headers: { 'authorization': 'Bearer ' + auth?.token }
+        //     }).then(response => {
+        //         let userExerRep: ExerciseReps[] = [];
+        //         for (let i = 0; i < response.data.length; i++) {
+        //             const exRep: GetExerciseResponse = response.data[i];
+        //             console.log(exerciseFactory(exRep.exerciseId));
+        //             userExerRep.push({ _id: exRep._id, exercise: exerciseFactory(exRep.exerciseId), repetitions: exRep.repetitions })
+        //         }
+        //         setUserExercise(userExerRep);
+        //     })
     }
 
     return (

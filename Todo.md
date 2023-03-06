@@ -117,3 +117,14 @@
   * [X] sync muscles
   * [X] sync exercises
   * [X] sync user exercises
+
+### Step 9
+* [ ] Edit Exercises
+* [ ] User Workouts instead of Exercises
+  * [X] workout context
+  * [ ] Workout component
+  * [ ] new workout component
+  * [ ] display workouts on home page
+  * [ ] add exercise to workout
+  * [ ] remove exercise from workout
+  * [ ] sync workouts
