@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 import { useExercise } from "../context/exercise";
 import { useMuscle } from "../context/muscle";
-import { useUserExercise } from "../context/userExercise";
+import { useWorkout } from "../context/workout";
 
 interface Props {
     children?: React.ReactNode;
@@ -10,12 +10,12 @@ interface Props {
 function SyncButton({ children }: Props) {
     const muscleCtx = useMuscle()!;
     const exerciseCtx = useExercise()!;
-    const userExerciseCtx = useUserExercise()!;
+    const workoutCtx = useWorkout()!;
 
     async function handleClick(e: MouseEvent) {
         await muscleCtx.sync();
         await exerciseCtx.sync();
-        await userExerciseCtx.sync();
+        await workoutCtx.sync();
     }
 
     return (

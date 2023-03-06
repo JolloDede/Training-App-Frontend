@@ -1,21 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import Navbar, { ActivePage } from '../../components/Navbar';
+import NewWorkout from './NewWorkout';
 import PageTitle from '../../components/PageTitle';
 import { useAuth } from '../../context/auth'
 import { ExerciseProvider } from '../../context/exercise';
-import { UserExerciseProvider } from '../../context/userExercise';
-import NewUserExercise from './NewUserExercise';
-import UserExerciseList from './UserExerciseList';
+import { WorkoutProvider } from '../../context/workout';
+import WorkoutList from './WorkoutList';
 
 
 function Profile() {
-    const [newUExerciseShow, setNewUExerciseShow] = useState(false);
+    const navigate = useNavigate();
     const auth = useAuth()!;
 
+    useEffect(() => {
+        navigate("workouts");
+    }, [])
 
     function handleNewExerciseCLick() {
-        setNewUExerciseShow(true);
+        navigate("workouts/new");
     }
 
     return (
@@ -26,15 +30,16 @@ function Profile() {
                 <p>Welcome {auth?.user.name}</p>
             </div>
             <div className='flex'>
-                <Button className='justify-center mx-auto' onCLick={handleNewExerciseCLick}>New Exercise</Button>
+                <Button className='justify-center mx-auto' onCLick={handleNewExerciseCLick}>New Workout</Button>
             </div>
             <ExerciseProvider>
-                <UserExerciseProvider>
-                    {newUExerciseShow && <NewUserExercise displayNone={() => setNewUExerciseShow(false)} />}
-                    <div className='mt-2'>
-                        <UserExerciseList />
-                    </div>
-                </UserExerciseProvider>
+                <WorkoutProvider>
+                    <Routes>
+                        <Route index path="workouts" element={<WorkoutList />} />
+                        {/* <Route path="/exercises/:id" element={<ExerciseSummary />} /> */}
+                        <Route path="/workouts/new" element={<NewWorkout />} />
+                    </Routes>
+                </WorkoutProvider>
             </ExerciseProvider>
         </>
     )

@@ -122,9 +122,19 @@
 * [ ] Edit Exercises
 * [ ] User Workouts instead of Exercises
   * [X] workout context
-  * [ ] Workout component
-  * [ ] new workout component
+  * [X] Workout component
+  * [X] new workout component
   * [ ] display workouts on home page
-  * [ ] add exercise to workout
+  * [X] add exercise to workout
   * [ ] remove exercise from workout
-  * [ ] sync workouts
+  * [X] sync workouts
+  * [X] navbar
+  * [ ] Social
+    * [ ] new workout
+    * [ ] workoutcomp
+  * [ ] Profile
+    * [X] new workout
+    * [X] workoutCard
+    * [X] workout list
+  * [ ] Home
+    * [ ] workout list with sets and reps

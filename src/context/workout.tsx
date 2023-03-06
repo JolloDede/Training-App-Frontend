@@ -1,14 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
-import { type } from 'os';
 import { createContext, useContext } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
 import { LOCALSTORAGEPRESET, USEREXERURI, WORKOUTRURI } from '../assets/config';
 import { useAuth } from './auth';
 import { Exercise, useExercise } from './exercise';
-import { ExerciseReps } from './userExercise';
 
 interface Props {
     children?: React.ReactNode;
+}
+
+export type ExerciseReps = {
+    exercise: Exercise;
+    repetitions: number;
 }
 
 type AddWorkoutProp = {
@@ -17,7 +20,12 @@ type AddWorkoutProp = {
     userId?: string;
 }
 
-type Workout = {
+type ExerciseRepResponse = {
+    exerciseId: string;
+    repetitions: number;
+}
+
+export type Workout = {
     _id: string;
     name: string;
     exercises: ExerciseReps[];
@@ -28,20 +36,21 @@ interface WorkoutContextType {
     add: (addWorkout: AddWorkoutProp) => Promise<AxiosResponse>;
     remove: (workout: Workout) => Promise<AxiosResponse>;
     sync: () => void;
+    findExercises: (ExerciseRep: ExerciseRepResponse[]) => ExerciseReps[];
 }
 
 const WorkoutContext = createContext<WorkoutContextType | null>(null);
 
-export const UserExerciseProvider = ({ children }: Props) => {
+export const WorkoutProvider = ({ children }: Props) => {
     const [workouts, setWorkouts] = useLocalStorage<Workout[]>(LOCALSTORAGEPRESET + "workout-list", []);
     const auth = useAuth();
     const exerciseCtx = useExercise();
 
-    function exerciseFactory(ExerciseRep: [string, number][]): ExerciseReps[] {
+    function exerciseFactory(ExerciseRep: ExerciseRepResponse[]): ExerciseReps[] {
         let result: ExerciseReps[] = [];
         for(let i = 0; i < ExerciseRep.length; i++) {
-            result.push({exercise: exerciseCtx?.exercises.filter(exercise => exercise._id == ExerciseRep[i][0])[0]!, repetitions: ExerciseRep[i][1] });
-        } 
+            result.push({exercise: exerciseCtx?.exercises.filter(exercise => exercise._id == ExerciseRep[i].exerciseId)[0]!, repetitions: ExerciseRep[i].repetitions });
+        }
         return result;
     }
 
@@ -86,7 +95,7 @@ export const UserExerciseProvider = ({ children }: Props) => {
     }
 
     return (
-        <WorkoutContext.Provider value={{ workouts, add, remove, sync }}>
+        <WorkoutContext.Provider value={{ workouts, add, remove, sync, findExercises: exerciseFactory }}>
             {children}
         </WorkoutContext.Provider>
     )
