@@ -124,7 +124,7 @@
   * [X] workout context
   * [X] Workout component
   * [X] new workout component
-  * [ ] display workouts on home page
+  * [X] display workouts on home page
   * [X] add exercise to workout
   * [ ] remove exercise from workout
   * [X] sync workouts
@@ -136,5 +136,5 @@
     * [X] new workout
     * [X] workoutCard
     * [X] workout list
-  * [ ] Home
-    * [ ] workout list with sets and reps
+  * [X] Home
+    * [X] workout list with sets and reps
