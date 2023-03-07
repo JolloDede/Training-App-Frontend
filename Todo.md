@@ -146,6 +146,7 @@
 * [ ] edit workouts
   * [ ] remove exercise
   * [ ] add exercise
+* [X] Social add workout to otheruser title text
 
 #### Style
 * [X] Drop down infront of other things
