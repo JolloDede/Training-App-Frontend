@@ -119,14 +119,12 @@
   * [X] sync user exercises
 
 ### Step 9
-* [ ] Edit Exercises
-* [ ] User Workouts instead of Exercises
+* [X] User Workouts instead of Exercises
   * [X] workout context
   * [X] Workout component
   * [X] new workout component
   * [X] display workouts on home page
   * [X] add exercise to workout
-  * [ ] remove exercise from workout
   * [X] sync workouts
   * [X] navbar
   * [X] Social
@@ -142,3 +140,9 @@
 #### Fix
 * [X] New exercise form instead of div for wrapper
 * [X] new muscle rework form submit
+
+### Step 10
+* [ ] edit exercises
+* [ ] edit workouts
+  * [ ] remove exercise
+  * [ ] add exercise
