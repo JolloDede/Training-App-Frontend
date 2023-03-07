@@ -146,3 +146,6 @@
 * [ ] edit workouts
   * [ ] remove exercise
   * [ ] add exercise
+
+#### Style
+* [X] Drop down infront of other things

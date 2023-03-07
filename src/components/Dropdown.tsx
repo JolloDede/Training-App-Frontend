@@ -64,7 +64,7 @@ function Dropdown({ placeholder, options, onChange }: Props) {
                 </div>
             </div>
             {showMenu && (
-                <div className="absolute w-full max-h-[150px] translate-y-1 overflow-y-auto border rounded-lg bg-white">
+                <div className="absolute w-full max-h-[150px] translate-y-1 overflow-y-auto border rounded-lg bg-white z-50">
                     {options.map((option) => (
                         <div key={option.key} onClick={() => itemClickHandle(option)} className={"p-2 hover:bg-blue-300 "+ (isSelected(option) && "bg-blue-500")}>
                             {option.value}
