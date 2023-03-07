@@ -3,6 +3,7 @@ import { useWorkout, Workout } from "../../context/workout";
 import Bin from "../../components/Bin";
 import Card from "../../components/Card";
 import ExpandIcon from "../../components/ExpandIcon";
+import ExerciseRep from "./ExerciseRep";
 
 interface Props {
     workout: Workout;
@@ -35,10 +36,7 @@ function WorkoutCard({ workout }: Props) {
             </div>
             <div className={displayExercises? "flex flex-col ml-8" : "hidden"}>
                 {workout.exercises.map((exerciseRep, index) => (
-                    <Card key={index}>
-                        <p>{exerciseRep.exercise.name}</p>
-                        <p className="justify-center mx-auto font-bold">Repetitions: {exerciseRep.repetitions}</p>
-                    </Card>
+                    <ExerciseRep key={workout._id+index} exerciseRep={exerciseRep} />
                 ))}
             </div>
         </Card>
