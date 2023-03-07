@@ -40,7 +40,7 @@ function NewExercise() {
     }
 
     return (
-        <div className="border rounded-lg p-4">
+        <form onSubmit={e => e.preventDefault()} className="border rounded-lg p-4">
             <p className="flex text-red-600">{errorMsg}</p>
             <input type="text" value={name} onChange={e => setName(e.target.value)} className="text-3xl font-bold hover:border rounded-lg" />
             <br />
@@ -54,7 +54,7 @@ function NewExercise() {
                 <Button onCLick={handleSaveClick}>Save</Button>
                 <RedButton onCLick={() => navigate(-1)}>Cancle</RedButton>
             </div>
-        </div>
+        </form>
     );
 }
 

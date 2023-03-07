@@ -100,7 +100,6 @@
   * [X] home
     * [X] wrap sets
 
-### Step can wait but would be nice
 #### Rework
 * [X] interface Function declarations
   * [X] muscle
@@ -112,3 +111,38 @@
   * [X] auth
     * [X] login
     * [X] login
+
+### Step 8
+* [X] sync button
+  * [X] sync muscles
+  * [X] sync exercises
+  * [X] sync user exercises
+
+### Step 9
+* [X] User Workouts instead of Exercises
+  * [X] workout context
+  * [X] Workout component
+  * [X] new workout component
+  * [X] display workouts on home page
+  * [X] add exercise to workout
+  * [X] sync workouts
+  * [X] navbar
+  * [X] Social
+    * [X] new workout
+    * [X] workoutcomp
+  * [X] Profile
+    * [X] new workout
+    * [X] workoutCard
+    * [X] workout list
+  * [X] Home
+    * [X] workout list with sets and reps
+
+#### Fix
+* [X] New exercise form instead of div for wrapper
+* [X] new muscle rework form submit
+
+### Step 10
+* [ ] edit exercises
+* [ ] edit workouts
+  * [ ] remove exercise
+  * [ ] add exercise

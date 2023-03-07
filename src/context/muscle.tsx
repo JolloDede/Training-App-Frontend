@@ -26,6 +26,7 @@ interface MuscleContextType {
     muscles: Muscel[];
     addMuscle: (newMuscle: NewMuscel) => Promise<AxiosResponse> ;
     removeMuscle: (muscle: Muscel) => Promise<AxiosResponse>;
+    sync: () => void;
 }
 
 const MuscleContext = createContext<MuscleContextType | null>(null);
@@ -56,8 +57,16 @@ export const MuscleProvider = ({ children }: Props) => {
         });
     }
 
+    function sync() {
+        axios.get(MUSCLEURI,
+            { headers: { 'authorization': 'Bearer ' + auth?.token } 
+        }).then(response => {
+            setMuscles(response.data);
+        });
+    }
+
     return (
-        <MuscleContext.Provider value={{ muscles, addMuscle, removeMuscle }}>
+        <MuscleContext.Provider value={{ muscles, addMuscle, removeMuscle, sync }}>
             {children}
         </MuscleContext.Provider>
     )

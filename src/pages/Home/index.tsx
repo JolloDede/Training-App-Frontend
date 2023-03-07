@@ -1,23 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar, { ActivePage } from '../../components/Navbar'
 import PageTitle from '../../components/PageTitle'
-import { UserExerciseProvider } from '../../context/userExercise';
-import UserExerciseList from './UserExerciseList'
+import { WorkoutProvider } from '../../context/workout';
+import WorkoutList from './WorkoutList';
 
 function Home() {
   const navigate = useNavigate();
-
-  function handleCLick() {
-    navigate("/settings");
-  }
 
   return (
     <>
       <Navbar activePage={ActivePage.Home} />
       <PageTitle>Home</PageTitle>
-      <UserExerciseProvider>
-        <UserExerciseList />
-      </UserExerciseProvider>
+      <WorkoutProvider>
+        <WorkoutList />
+      </WorkoutProvider>
     </>
   )
 }

@@ -6,6 +6,7 @@ export const LOGINURI = "auth/login";
 export const MUSCLEURI = "assets/muscles";
 export const EXERCISEURI = "assets/exercises";
 export const USEREXERURI = "assets/user/exercises";
+export const WORKOUTRURI = "assets/user/workouts";
 export const USERURI = "user";
 
 export const LOCALSTORAGEPRESET = "training-app-";

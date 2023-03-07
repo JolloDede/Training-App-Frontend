@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/auth'
-import { UserExerciseProvider } from './context/userExercise'
 import Admin from './pages/Admin'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -17,7 +16,7 @@ function App() {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path={"/"} element={<Home />} />
-            <Route path={"/profile"} element={<Profile />} />
+            <Route path={"/profile/*"} element={<Profile />} />
             <Route path={"/social/*"} element={<Social />} />
             <Route element={<AdminRoutes />}>
               <Route path="/admin/*" element={<Admin />} />
