@@ -21,6 +21,13 @@ function WorkoutCard({ workout }: Props) {
         }
     }
 
+    function handleExerciseDelClick(e: MouseEvent, index: number) {
+        // e.stopPropagation();
+        let updatedWorkout = workout;
+        updatedWorkout.exercises = updatedWorkout.exercises.filter((_, id) => id != index);
+        workoutCtx?.edit(updatedWorkout);
+    }
+
     function handleExpandClick() {
         setdisplayExercises(!displayExercises);
     }
@@ -36,7 +43,7 @@ function WorkoutCard({ workout }: Props) {
             </div>
             <div className={displayExercises? "flex flex-col ml-8" : "hidden"}>
                 {workout.exercises.map((exerciseRep, index) => (
-                    <ExerciseRep key={workout._id+index} exerciseRep={exerciseRep} />
+                    <ExerciseRep key={workout._id+index} exerciseRep={exerciseRep} handleDelClick={(e: MouseEvent) => handleExerciseDelClick(e, index)} />
                 ))}
             </div>
         </Card>

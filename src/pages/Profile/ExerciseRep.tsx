@@ -5,16 +5,18 @@ import { ExerciseReps } from "../../context/workout";
 
 interface Props {
     exerciseRep: ExerciseReps;
+    handleDelClick: (e: MouseEvent) => any;
 }
 
-function ExerciseRep({ exerciseRep }: Props) {
+function ExerciseRep({ exerciseRep, handleDelClick }: Props) {
+
     return (
         <Card>
             <p>{exerciseRep.exercise.name}</p>
             <p className="justify-center mx-auto font-bold">Repetitions: {exerciseRep.repetitions}</p>
-            {/* <div onClick={(e) => handleDelClick(e, exerciseRep)} className="flex ml-auto justify-end cursor-pointer">
+            <div onClick={handleDelClick} className="flex ml-auto justify-end cursor-pointer">
                 <Bin />
-            </div> */}
+            </div>
         </Card>
     );
 }

@@ -35,6 +35,7 @@ interface WorkoutContextType {
     workouts: Workout[];
     add: (addWorkout: AddWorkoutProp) => Promise<AxiosResponse>;
     remove: (workout: Workout) => Promise<AxiosResponse>;
+    edit: (workout: Workout, userId?: string) => void;
     sync: () => void;
     findExercises: (ExerciseRep: ExerciseRepResponse[]) => ExerciseReps[];
 }
@@ -95,8 +96,35 @@ export const WorkoutProvider = ({ children }: Props) => {
         });
     }
 
+    async function edit(workout: Workout, userId?: string) {
+        const params = {
+            _id: workout._id,
+            name: workout.name,
+            exercises: workout.exercises.map(exerciseRepetition => ({ exerciseId: exerciseRepetition.exercise._id, repetitions: exerciseRepetition.repetitions })),
+            userId: userId || "",
+        };
+        axios.put(WORKOUTRURI, {
+            params,
+        },{
+            headers: { 'authorization': 'Bearer ' + auth?.token }
+        }).then(response => {
+            setWorkouts(workouts.map(work => {
+                if (work._id == response.data._id) {
+                    const updatedWorkout: Workout = {
+                        _id: response.data._id,
+                        name: response.data.name,
+                        exercises: exerciseFactory(response.data.exercises),
+                    }
+                    return updatedWorkout;
+                }else {
+                    return work;
+                }
+            }))
+        })
+    }
+
     return (
-        <WorkoutContext.Provider value={{ workouts, add, remove, sync, findExercises: exerciseFactory }}>
+        <WorkoutContext.Provider value={{ workouts, add, remove, edit, sync, findExercises: exerciseFactory }}>
             {children}
         </WorkoutContext.Provider>
     )
