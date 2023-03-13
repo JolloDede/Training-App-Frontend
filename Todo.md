@@ -157,6 +157,7 @@
   * [ ] exercise summary
   * [ ] add muscle
   * [ ] remove muscle
+* [ ] workout pen svg for editing
 * [ ] edit workout view
   * [ ] workout
     * [ ] summary
