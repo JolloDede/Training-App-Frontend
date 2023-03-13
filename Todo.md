@@ -142,10 +142,7 @@
 * [X] new muscle rework form submit
 
 ### Step 10
-* [ ] edit exercises
-* [ ] edit workouts
-  * [X] remove exercise
-  * [ ] add exercise
+* [X] remove exercise
 * [X] Social add workout to otheruser title text
 
 #### Style
@@ -154,3 +151,16 @@
 
 ### Step 11
 * [ ] Nextjs  integration
+
+### Step 12
+* [ ] edit exercise view
+  * [ ] exercise summary
+  * [ ] add muscle
+  * [ ] remove muscle
+* [ ] edit workout view
+  * [ ] workout
+    * [ ] summary
+    * [ ] rename
+  * [ ] exercise
+    * [ ] add
+    * [ ] remove
