@@ -25,13 +25,14 @@ interface ExerciseContextType {
     exercises: Exercise[];
     addExercise: (newExercise: NewExercise) => Promise<AxiosResponse>;
     removeExercise: (exercise: Exercise) => Promise<AxiosResponse>;
+    edit: (exercise: Exercise) => Promise<AxiosResponse>;
     sync: () => void;
 }
 
 const ExerciseContext = createContext<ExerciseContextType | null>(null);
 
 export const ExerciseProvider = ({ children }: Props) => {
-    const [exercises, setExercise] = useLocalStorage<Exercise[]>(LOCALSTORAGEPRESET + "exercise-list", []);
+    const [exercises, setExercises] = useLocalStorage<Exercise[]>(LOCALSTORAGEPRESET + "exercise-list", []);
     const auth = useAuth();
 
     async function addExercise(newExercise: NewExercise) {
@@ -44,7 +45,7 @@ export const ExerciseProvider = ({ children }: Props) => {
             {
                 headers: { 'authorization': 'Bearer ' + auth?.token }
             }).then(response => {
-                setExercise([...exercises, response.data]);
+                setExercises([...exercises, response.data]);
             }).catch(err => {
                 return err.response;
             })
@@ -55,10 +56,38 @@ export const ExerciseProvider = ({ children }: Props) => {
             {
                 headers: { 'authorization': 'Bearer ' + auth?.token }
             }).then(response => {
-                setExercise(exercises.filter((exercise: Exercise) => exercise._id != response.data._id));
+                setExercises(exercises.filter((exercise: Exercise) => exercise._id != response.data._id));
             }).catch(err => {
                 return err.response;
             })
+    }
+
+    async function edit(exercise: Exercise) {
+        const params = {
+            _id: exercise._id,
+            name: exercise.name,
+            muscles: exercise.muscles
+        };
+        return await axios.put(EXERCISEURI, {
+            params,
+        },{
+            headers: { 'authorization': 'Bearer ' + auth?.token }
+        }).then(response => {
+            setExercises(exercises.map(exercise => {
+                if (exercise._id == response.data._id) {
+                    const updatedExercise: Exercise = {
+                        _id: response.data._id,
+                        name: response.data.name,
+                        muscles: response.data.muscles,
+                    }
+                    return updatedExercise;
+                }else {
+                    return exercise;
+                }
+            }))
+        }).catch(err => {
+            return err.response;
+        })
     }
 
     function sync() {
@@ -66,12 +95,12 @@ export const ExerciseProvider = ({ children }: Props) => {
             {
                 headers: { 'authorization': 'Bearer ' + auth?.token }
             }).then(response => {
-                setExercise(response.data);
+                setExercises(response.data);
             });
     }
 
     return (
-        <ExerciseContext.Provider value={{ exercises, addExercise, removeExercise, sync }}>
+        <ExerciseContext.Provider value={{ exercises, addExercise, removeExercise, edit, sync }}>
             {children}
         </ExerciseContext.Provider>
     )

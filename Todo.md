@@ -148,14 +148,10 @@
 #### Style
 * [X] Drop down infront of other things
 
-
-### Step 11
-* [ ] Nextjs  integration
-
 ### Step 12
 * [ ] edit exercise view
-  * [ ] exercise summary
-  * [ ] add muscle
+  * [X] exercise summary
+  * [X] add muscle
   * [ ] remove muscle
 * [ ] workout pen svg for editing
 * [ ] edit workout view
@@ -165,3 +161,10 @@
   * [ ] exercise
     * [ ] add
     * [ ] remove
+
+#### Refactor
+* [ ] save the exercise muscle as id without name
+
+### Step maybe
+* [ ] Nextjs  integration
+  * [ ] do i need it?
