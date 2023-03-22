@@ -15,7 +15,7 @@ export type ExerciseReps = {
 }
 
 type BareExerciseRep = {
-    _id: string;
+    exerciseId: string;
     repetition: number;
 }
 
@@ -89,9 +89,8 @@ export const WorkoutProvider = ({ children }: Props) => {
 
     function syncHelper(bareExercises: BareExerciseRep[]): ExerciseReps[] {
         let exercises: Exercise[] = JSON.parse(localStorage.getItem("training-app-exercise-list")!);
-        let result: ExerciseReps[] = [];
-        bareExercises.map(bareExercise => {
-            return { exercise: exercises.find(exercise => exercise._id == bareExercise._id), repetition: bareExercise.repetition };
+        let result = bareExercises.map(bareExercise => {
+            return { exercise: exercises.find(exercise => exercise._id == bareExercise.exerciseId)!, repetitions: bareExercise.repetition };
         })
         return result;
     }
