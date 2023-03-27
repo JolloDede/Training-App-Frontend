@@ -153,14 +153,14 @@
   * [X] exercise summary
   * [X] add muscle
   * [X] remove muscle
-* [ ] workout pen svg for editing
-* [ ] edit workout view
-  * [ ] workout
-    * [ ] summary
-    * [ ] rename
-  * [ ] exercise
-    * [ ] add
-    * [ ] remove
+* [X] workout pen svg for editing
+* [X] edit workout view
+  * [X] workout
+    * [X] summary
+    * [X] rename
+  * [X] exercise
+    * [X] add
+    * [X] remove
 
 #### Refactor
 * [ ] save the exercise muscle as id without name

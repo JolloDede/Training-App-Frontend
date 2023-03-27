@@ -1,10 +1,10 @@
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import SecondTitle from "../../components/SecondTitle";
 import { useExercise } from "../../context/exercise";
-import TextInput from "../../components/TextInput";
 import EditExercise from "./EditExercise";
 import { MuscleProvider } from "../../context/muscle";
+import EditPen from "../../components/Pen";
 
 function ExerciseSummary() {
     const { id } = useParams();
@@ -22,7 +22,9 @@ function ExerciseSummary() {
     return (
         <div>
             <SecondTitle>{activeExercise.name}</SecondTitle>
-            <div><button onClick={() => setIsEditing(true)}>edit</button></div>
+            <div onClick={() => setIsEditing(true)}>
+                <EditPen />
+            </div>
             <ul>
                 <li className="font-bold">Muscle usage:</li>
                 <ul className="list-disc list-inside">
