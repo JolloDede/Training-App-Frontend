@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown, { DropdownOption } from "../../components/Dropdown";
 import { MuscleUsage, useMuscle } from "../../context/muscle";
 
@@ -15,7 +15,7 @@ function Muscle({ muscleUsage, update, id }: Props) {
         let result: DropdownOption[] = [];
         if (!muscleCtx) return result;
         for (let i = 0; i < muscleCtx!.muscles.length; i++) {
-            result.push({ key: muscleCtx!.muscles[i]._id.toString(), value:  muscleCtx!.muscles[i].name })
+            result.push({ key: muscleCtx!.muscles[i]._id.toString(), value: muscleCtx!.muscles[i].name })
         }
         return result;
     }
@@ -31,8 +31,10 @@ function Muscle({ muscleUsage, update, id }: Props) {
 
     return (
         <div>
-            <Dropdown placeholder="Select..." options={dropOptions()} onChange={(option: DropdownOption) => handleDropdownChange(option)} />
-            <input type="number" value={muscleUsage.percent} onChange={e => handleChange(e)} />
+            <Dropdown placeholder={muscleUsage.muscle.name} options={dropOptions()} onChange={(option: DropdownOption) => handleDropdownChange(option)} />
+            <div className="mt-1">
+                <label>Usage Percent: </label><input type="number" value={muscleUsage.percent} onChange={e => handleChange(e)} />
+            </div>
         </div>
     );
 }
