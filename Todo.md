@@ -149,10 +149,10 @@
 * [X] Drop down infront of other things
 
 ### Step 12
-* [ ] edit exercise view
+* [X] edit exercise view
   * [X] exercise summary
   * [X] add muscle
-  * [ ] remove muscle
+  * [X] remove muscle
 * [ ] workout pen svg for editing
 * [ ] edit workout view
   * [ ] workout
@@ -164,6 +164,15 @@
 
 #### Refactor
 * [ ] save the exercise muscle as id without name
+* [ ] sync process
+  * [ ] muscles
+    * [ ] download
+  * [ ] exercises
+    * [ ] download
+    * [ ] build
+  * [ ] workouts
+    * [ ] download
+    * [ ] build
 
 ### Step maybe
 * [ ] Nextjs  integration

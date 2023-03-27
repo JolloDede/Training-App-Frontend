@@ -31,7 +31,7 @@ function Muscle({ muscleUsage, update, id }: Props) {
 
     return (
         <div>
-            <Dropdown placeholder={muscleUsage.muscle.name} options={dropOptions()} onChange={(option: DropdownOption) => handleDropdownChange(option)} />
+            <Dropdown placeholder={muscleUsage.muscle.name || "Select Muscle..."} options={dropOptions()} onChange={(option: DropdownOption) => handleDropdownChange(option)} />
             <div className="mt-1">
                 <label>Usage Percent: </label><input type="number" value={muscleUsage.percent} onChange={e => handleChange(e)} />
             </div>

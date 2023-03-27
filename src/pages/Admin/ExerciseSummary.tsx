@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import SecondTitle from "../../components/SecondTitle";
 import { useExercise } from "../../context/exercise";
 import TextInput from "../../components/TextInput";
-import UpdateExercise from "./UpdateExercise";
+import EditExercise from "./EditExercise";
 import { MuscleProvider } from "../../context/muscle";
 
 function ExerciseSummary() {
@@ -15,7 +15,7 @@ function ExerciseSummary() {
     if (isEditing) {
         return (
             <MuscleProvider>
-                <UpdateExercise exercise={activeExercise} />
+                <EditExercise exercise={activeExercise} />
             </MuscleProvider>
         );
     }
