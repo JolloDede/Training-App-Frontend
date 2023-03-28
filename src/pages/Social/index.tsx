@@ -16,18 +16,14 @@ function Social() {
         <>
             <Navbar activePage={ActivePage.Social} />
             <PageTitle>Social</PageTitle>
-            <ExerciseProvider>
-                <WorkoutProvider>
-                    <Routes>
-                        <Route path="/" element={<Teams />} />
-                        {/* Todo add exercises to other users */}
-                        <Route element={<AdminRoutes />}>
-                            <Route path="/:id" element={<User />} />
-                            <Route path="/:id/newworkout" element={<NewWorkout />} />
-                        </Route>
-                    </Routes>
-                </WorkoutProvider>
-            </ExerciseProvider>
+            <Routes>
+                <Route path="/" element={<Teams />} />
+                {/* Todo add exercises to other users */}
+                <Route element={<AdminRoutes />}>
+                    <Route path="/:id" element={<User />} />
+                    <Route path="/:id/newworkout" element={<NewWorkout />} />
+                </Route>
+            </Routes>
         </>
     );
 }

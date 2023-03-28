@@ -26,15 +26,11 @@ function Profile() {
             <div className='flex'>
                 <p>Welcome {auth?.user.name}</p>
             </div>
-            <ExerciseProvider>
-                <WorkoutProvider>
-                    <Routes>
-                        <Route index path="workouts" element={<WorkoutList />} />
-                        <Route path="/workouts/:id" element={<WorkoutSummary />} />
-                        <Route path="/workouts/new" element={<NewWorkout />} />
-                    </Routes>
-                </WorkoutProvider>
-            </ExerciseProvider>
+            <Routes>
+                <Route index path="workouts" element={<WorkoutList />} />
+                <Route path="/workouts/:id" element={<WorkoutSummary />} />
+                <Route path="/workouts/new" element={<NewWorkout />} />
+            </Routes>
         </>
     )
 }

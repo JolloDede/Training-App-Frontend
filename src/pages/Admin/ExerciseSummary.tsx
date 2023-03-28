@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import SecondTitle from "../../components/SecondTitle";
 import { useExercise } from "../../context/exercise";
 import EditExercise from "./EditExercise";
-import { MuscleProvider } from "../../context/muscle";
 import EditPen from "../../components/Pen";
 
 function ExerciseSummary() {
@@ -14,9 +13,7 @@ function ExerciseSummary() {
 
     if (isEditing) {
         return (
-            <MuscleProvider>
-                <EditExercise exercise={activeExercise} />
-            </MuscleProvider>
+            <EditExercise exercise={activeExercise} />
         );
     }
     return (
