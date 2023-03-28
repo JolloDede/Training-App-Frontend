@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
 import { EXERCISEURI, LOCALSTORAGEPRESET } from '../assets/config';
 import { useAuth } from './auth';
-import { MuscleUsage } from './muscle';
+import { MuscleUsage, useMuscle } from './muscle';
 
 interface Props {
     children?: React.ReactNode;
@@ -20,6 +20,10 @@ export type NewExercise = {
     muscles: MuscleUsage[];
 }
 
+type MuscleUSageResponse = {
+    muscleId: string;
+    percent: number;
+}
 
 interface ExerciseContextType {
     exercises: Exercise[];
@@ -33,13 +37,22 @@ const ExerciseContext = createContext<ExerciseContextType | null>(null);
 
 export const ExerciseProvider = ({ children }: Props) => {
     const [exercises, setExercises] = useLocalStorage<Exercise[]>(LOCALSTORAGEPRESET + "exercise-list", []);
-    const auth = useAuth();
+    const auth = useAuth()!;
+    const muscleCtx = useMuscle()!;
+
+    function muscleFactory(muscleUsage: MuscleUSageResponse[]): MuscleUsage[] {
+        let result: MuscleUsage[] = [];
+        for(let i = 0; i < muscleUsage.length; i++) {
+            result.push({muscle: muscleCtx?.muscles.filter(muscle => muscle._id == muscleUsage[i].muscleId)[0]!, percent: muscleUsage[i].percent });
+        }
+        return result;
+    }
 
     async function addExercise(newExercise: NewExercise) {
         return await axios.post(EXERCISEURI, {
             params: {
                 name: newExercise.name,
-                muscles: newExercise.muscles,
+                muscles: newExercise.muscles.map(musclUsage => ({ muscleId: musclUsage.muscle._id, percent: musclUsage.percent })),
             }
         },
             {
@@ -78,7 +91,7 @@ export const ExerciseProvider = ({ children }: Props) => {
                     const updatedExercise: Exercise = {
                         _id: response.data._id,
                         name: response.data.name,
-                        muscles: response.data.muscles,
+                        muscles: muscleFactory(response.data.muscles),
                     }
                     return updatedExercise;
                 }else {
@@ -95,7 +108,7 @@ export const ExerciseProvider = ({ children }: Props) => {
             {
                 headers: { 'authorization': 'Bearer ' + auth?.token }
             }).then(response => {
-                setExercises(response.data);
+                setExercises(response.data.map((exerciseRes: any) => ({ _id: exerciseRes._id, name: exerciseRes.name, muscles: muscleFactory(exerciseRes.muscles) })));
             });
     }
 

@@ -163,7 +163,7 @@
     * [X] remove
 
 #### Refactor
-* [ ] save the exercise muscle as id without name
+* [X] save the exercise muscle as id without name
 * [X] contexts all go into private route (all routes in privates routes need the contexts)
 * [ ] sync process
   * [ ] muscles
