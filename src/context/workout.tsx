@@ -56,7 +56,7 @@ export const WorkoutProvider = ({ children }: Props) => {
         return result;
     }
 
-    async function add({ name, userId, exercises}: AddWorkoutProp) {
+    async function add({ name, userId, exercises }: AddWorkoutProp) {
         const params = {
             name: name,
             exercises: exercises.map(exerciseRep => ({ exerciseId: exerciseRep.exercise._id, repetitions: exerciseRep.repetitions })),
@@ -75,11 +75,11 @@ export const WorkoutProvider = ({ children }: Props) => {
     }
 
     async function remove(workout: Workout) {
-        return await axios.delete(WORKOUTRURI+"/"+workout._id,{
+        return await axios.delete(WORKOUTRURI + "/" + workout._id, {
             headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             setWorkouts(workouts.filter(wkout => wkout._id != response.data._id));
-        }).catch(err=> {
+        }).catch(err => {
             return err.response;
         });
     }
@@ -93,7 +93,7 @@ export const WorkoutProvider = ({ children }: Props) => {
         };
         axios.put(WORKOUTRURI, {
             params,
-        },{
+        }, {
             headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             setWorkouts(workouts.map(work => {
@@ -104,7 +104,7 @@ export const WorkoutProvider = ({ children }: Props) => {
                         exercises: exerciseFactory(response.data.exercises),
                     }
                     return updatedWorkout;
-                }else {
+                } else {
                     return work;
                 }
             }))
@@ -112,7 +112,7 @@ export const WorkoutProvider = ({ children }: Props) => {
     }
 
     async function sync() {
-        axios.get(WORKOUTRURI,{
+        axios.get(WORKOUTRURI, {
             headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             let workoutRes: Workout[] = [];
