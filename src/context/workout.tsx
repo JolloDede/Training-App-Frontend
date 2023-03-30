@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
 import { LOCALSTORAGEPRESET, USEREXERURI, WORKOUTRURI } from '../assets/config';
 import { useAuth } from './auth';
-import { Exercise, useExercise } from './exercise';
+import { Exercise, LOCALSTORAGEEXERCISES, useExercise } from './exercise';
 
 interface Props {
     children?: React.ReactNode;
@@ -12,11 +12,6 @@ interface Props {
 export type ExerciseReps = {
     exercise: Exercise;
     repetitions: number;
-}
-
-type BareExerciseRep = {
-    exerciseId: string;
-    repetition: number;
 }
 
 type AddWorkoutProp = {
@@ -40,22 +35,24 @@ interface WorkoutContextType {
     workouts: Workout[];
     add: (addWorkout: AddWorkoutProp) => Promise<AxiosResponse>;
     remove: (workout: Workout) => Promise<AxiosResponse>;
+    edit: (workout: Workout, userId?: string) => void;
     sync: () => void;
     findExercises: (ExerciseRep: ExerciseRepResponse[]) => ExerciseReps[];
 }
 
 const WorkoutContext = createContext<WorkoutContextType | null>(null);
+export const LOCALSTORAGEWORKOUTS = LOCALSTORAGEPRESET + "workout-list";
+
 
 export const WorkoutProvider = ({ children }: Props) => {
-    const [workouts, setWorkouts] = useLocalStorage<Workout[]>(LOCALSTORAGEPRESET + "workout-list", []);
+    const [workouts, setWorkouts] = useLocalStorage<Workout[]>(LOCALSTORAGEWORKOUTS, []);
     const auth = useAuth()!;
-    const exerciseCtx = useExercise()!;
 
-    function exerciseFactory(ExerciseRep: ExerciseRepResponse[]): ExerciseReps[] {
-        let result: ExerciseReps[] = [];
-        for (let i = 0; i < ExerciseRep.length; i++) {
-            result.push({ exercise: exerciseCtx.exercises.filter(exercise => exercise._id == ExerciseRep[i].exerciseId)[0]!, repetitions: ExerciseRep[i].repetitions });
-        }
+    function exerciseFactory(exerciseRep: ExerciseRepResponse[]): ExerciseReps[] {
+        let exercises: Exercise[] = JSON.parse(localStorage.getItem(LOCALSTORAGEEXERCISES)!);
+        let result = exerciseRep.map(exerciseRep => {
+            return { exercise: exercises.find(exercise => exercise._id == exerciseRep.exerciseId)!, repetitions: exerciseRep.repetitions };
+        })
         return result;
     }
 
@@ -68,7 +65,7 @@ export const WorkoutProvider = ({ children }: Props) => {
         return await axios.post(WORKOUTRURI, {
             params,
         }, {
-            headers: { 'authorization': 'Bearer ' + auth?.token }
+            headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             if (userId) return;
             setWorkouts([...workouts, { _id: response.data._id, name: response.data.name, exercises: exerciseFactory(response.data.exercises) }]);
@@ -79,7 +76,7 @@ export const WorkoutProvider = ({ children }: Props) => {
 
     async function remove(workout: Workout) {
         return await axios.delete(WORKOUTRURI + "/" + workout._id, {
-            headers: { 'authorization': 'Bearer ' + auth?.token }
+            headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             setWorkouts(workouts.filter(wkout => wkout._id != response.data._id));
         }).catch(err => {
@@ -87,29 +84,48 @@ export const WorkoutProvider = ({ children }: Props) => {
         });
     }
 
-    function syncHelper(bareExercises: BareExerciseRep[]): ExerciseReps[] {
-        let exercises: Exercise[] = JSON.parse(localStorage.getItem("training-app-exercise-list")!);
-        let result = bareExercises.map(bareExercise => {
-            return { exercise: exercises.find(exercise => exercise._id == bareExercise.exerciseId)!, repetitions: bareExercise.repetition };
+    async function edit(workout: Workout, userId?: string) {
+        const params = {
+            _id: workout._id,
+            name: workout.name,
+            exercises: workout.exercises.map(exerciseRepetition => ({ exerciseId: exerciseRepetition.exercise._id, repetitions: exerciseRepetition.repetitions })),
+            userId: userId || "",
+        };
+        axios.put(WORKOUTRURI, {
+            params,
+        }, {
+            headers: { 'authorization': 'Bearer ' + auth.token }
+        }).then(response => {
+            setWorkouts(workouts.map(work => {
+                if (work._id == response.data._id) {
+                    const updatedWorkout: Workout = {
+                        _id: response.data._id,
+                        name: response.data.name,
+                        exercises: exerciseFactory(response.data.exercises),
+                    }
+                    return updatedWorkout;
+                } else {
+                    return work;
+                }
+            }))
         })
-        return result;
     }
 
     async function sync() {
         axios.get(WORKOUTRURI, {
-            headers: { 'authorization': 'Bearer ' + auth?.token }
+            headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             let workoutRes: Workout[] = [];
             for (let i = 0; i < response.data.length; i++) {
                 const bareWorkout = response.data[i];
-                workoutRes.push({ _id: bareWorkout._id, name: bareWorkout.name, exercises: syncHelper(bareWorkout.exercises) })
+                workoutRes.push({ _id: bareWorkout._id, name: bareWorkout.name, exercises: exerciseFactory(bareWorkout.exercises) })
             }
             setWorkouts(workoutRes);
         });
     }
 
     return (
-        <WorkoutContext.Provider value={{ workouts, add, remove, sync, findExercises: exerciseFactory }}>
+        <WorkoutContext.Provider value={{ workouts, add, remove, edit, sync, findExercises: exerciseFactory }}>
             {children}
         </WorkoutContext.Provider>
     )

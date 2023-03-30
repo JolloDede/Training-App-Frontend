@@ -49,7 +49,7 @@ function User() {
         <div>
             <h1>Hallo {user?.username}</h1>
             <div>
-                <SecondTitle>Exercises</SecondTitle>
+                <SecondTitle>Workouts</SecondTitle>
                 <Button onCLick={handleOnClick}>Add Workout</Button>
                 {workouts && workouts.map(workout => (
                     <WorkoutCard key={workout._id} workout={workout} />

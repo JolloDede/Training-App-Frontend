@@ -8,7 +8,7 @@ interface Props {
 
 function Card({ children, classname, onClick }: Props) {
     return ( 
-        <div onClick={onClick} className={"flex flex-row flex-wrap border rounded-lg p-4 my-1 "+classname}>
+        <div onClick={onClick} className={"flex flex-row justify-between flex-wrap border rounded-lg p-4 my-1 "+classname}>
             {children}
         </div>
      );

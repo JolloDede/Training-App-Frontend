@@ -1,8 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { Group, useAuth } from '../context/auth';
-import { ExerciseProvider } from '../context/exercise';
-import { MuscleProvider } from '../context/muscle';
-import { WorkoutProvider } from '../context/workout';
 import SyncButton from './SyncButton';
 
 export enum ActivePage {
@@ -46,9 +43,7 @@ function Navbar({ activePage }: Props) {
                 {auth?.user.group == Group.Admin ? <Link to={"/admin"} className={AdminClassname} >Admin</Link> : ""}
             </div>
             <div className='flex self-end'>
-                <MuscleProvider><ExerciseProvider><WorkoutProvider>
-                    <SyncButton>Sync</SyncButton>
-                </WorkoutProvider></ExerciseProvider></MuscleProvider>
+                <SyncButton>Sync</SyncButton>
                 <button onClick={handleLogoutClick} className='bg-white text-blue-500 hover:text-blue-800 px-4 py-2 mx-2 border rounded'>Logout</button>
             </div>
         </nav>

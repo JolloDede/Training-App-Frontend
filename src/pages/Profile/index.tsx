@@ -8,6 +8,7 @@ import { useAuth } from '../../context/auth'
 import { ExerciseProvider } from '../../context/exercise';
 import { WorkoutProvider } from '../../context/workout';
 import WorkoutList from './WorkoutList';
+import WorkoutSummary from './WorkoutSummary';
 
 
 function Profile() {
@@ -18,10 +19,6 @@ function Profile() {
         navigate("workouts");
     }, [])
 
-    function handleNewExerciseCLick() {
-        navigate("workouts/new");
-    }
-
     return (
         <>
             <Navbar activePage={ActivePage.Profile} />
@@ -29,18 +26,11 @@ function Profile() {
             <div className='flex'>
                 <p>Welcome {auth?.user.name}</p>
             </div>
-            <div className='flex'>
-                <Button className='justify-center mx-auto' onCLick={handleNewExerciseCLick}>New Workout</Button>
-            </div>
-            <ExerciseProvider>
-                <WorkoutProvider>
-                    <Routes>
-                        <Route index path="workouts" element={<WorkoutList />} />
-                        {/* <Route path="/exercises/:id" element={<ExerciseSummary />} /> */}
-                        <Route path="/workouts/new" element={<NewWorkout />} />
-                    </Routes>
-                </WorkoutProvider>
-            </ExerciseProvider>
+            <Routes>
+                <Route index path="workouts" element={<WorkoutList />} />
+                <Route path="/workouts/:id" element={<WorkoutSummary />} />
+                <Route path="/workouts/new" element={<NewWorkout />} />
+            </Routes>
         </>
     )
 }

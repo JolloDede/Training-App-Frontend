@@ -142,7 +142,34 @@
 * [X] new muscle rework form submit
 
 ### Step 10
-* [ ] edit exercises
-* [ ] edit workouts
-  * [ ] remove exercise
-  * [ ] add exercise
+* [X] remove exercise
+* [X] Social add workout to otheruser title text
+
+#### Style
+* [X] Drop down infront of other things
+
+### Step 12
+* [X] edit exercise view
+  * [X] exercise summary
+  * [X] add muscle
+  * [X] remove muscle
+* [X] workout pen svg for editing
+* [X] edit workout view
+  * [X] workout
+    * [X] summary
+    * [X] rename
+  * [X] exercise
+    * [X] add
+    * [X] remove
+
+#### Refactor
+* [X] save the exercise muscle as id without name
+* [X] contexts all go into private route (all routes in privates routes need the contexts)
+* [X] sync process
+  * [X] muscles
+  * [X] exercises
+  * [X] workouts
+
+### Step maybe
+* [ ] Nextjs  integration
+  * [ ] do i need it?

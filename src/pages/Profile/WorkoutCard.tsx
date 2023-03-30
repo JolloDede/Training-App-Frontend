@@ -4,12 +4,15 @@ import Bin from "../../components/Bin";
 import Card from "../../components/Card";
 import ExpandIcon from "../../components/ExpandIcon";
 import ExerciseRep from "./ExerciseRep";
+import { useNavigate } from "react-router-dom";
+import EditPen from "../../components/Pen";
 
 interface Props {
     workout: Workout;
 }
 
 function WorkoutCard({ workout }: Props) {
+    const navigate = useNavigate();
     const workoutCtx = useWorkout();
     const [displayExercises, setdisplayExercises] = useState(false);
 
@@ -21,6 +24,12 @@ function WorkoutCard({ workout }: Props) {
         }
     }
 
+    function handleExerciseDelClick(e: MouseEvent, index: number) {
+        let updatedWorkout = workout;
+        updatedWorkout.exercises = updatedWorkout.exercises.filter((_, id) => id != index);
+        workoutCtx?.edit(updatedWorkout);
+    }
+
     function handleExpandClick() {
         setdisplayExercises(!displayExercises);
     }
@@ -28,15 +37,20 @@ function WorkoutCard({ workout }: Props) {
     return (
         <Card classname="flex-col border rounded-lg p-4">
             <div className="flex flex-row">
-                <div onClick={handleExpandClick}><ExpandIcon classname={!displayExercises? "-rotate-90" : ""} /></div>
+                <div onClick={handleExpandClick}><ExpandIcon classname={!displayExercises ? "-rotate-90" : ""} /></div>
                 <p className="flex">{workout.name}</p>
-                <div onClick={(e) => handleDelClick(e, workout)} className="flex ml-auto justify-end cursor-pointer">
-                    <Bin />
+                <div className="flex ml-auto">
+                    <div onClick={() => navigate(workout._id)} className="cursor-pointer">
+                        <EditPen />
+                    </div>
+                    <div onClick={(e) => handleDelClick(e, workout)} className="cursor-pointer">
+                        <Bin />
+                    </div>
                 </div>
             </div>
-            <div className={displayExercises? "flex flex-col ml-8" : "hidden"}>
+            <div className={displayExercises ? "flex flex-col ml-8" : "hidden"}>
                 {workout.exercises.map((exerciseRep, index) => (
-                    <ExerciseRep key={workout._id+index} exerciseRep={exerciseRep} />
+                    <ExerciseRep key={workout._id + index} exerciseRep={exerciseRep} />
                 ))}
             </div>
         </Card>

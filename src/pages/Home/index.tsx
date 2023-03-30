@@ -11,9 +11,7 @@ function Home() {
     <>
       <Navbar activePage={ActivePage.Home} />
       <PageTitle>Home</PageTitle>
-      <WorkoutProvider>
-        <WorkoutList />
-      </WorkoutProvider>
+      <WorkoutList />
     </>
   )
 }
