@@ -165,15 +165,10 @@
 #### Refactor
 * [X] save the exercise muscle as id without name
 * [X] contexts all go into private route (all routes in privates routes need the contexts)
-* [ ] sync process
-  * [ ] muscles
-    * [ ] download
-  * [ ] exercises
-    * [ ] download
-    * [ ] build
-  * [ ] workouts
-    * [ ] download
-    * [ ] build
+* [X] sync process
+  * [X] muscles
+  * [X] exercises
+  * [X] workouts
 
 ### Step maybe
 * [ ] Nextjs  integration

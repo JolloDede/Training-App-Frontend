@@ -3,7 +3,7 @@ import { createContext, useContext } from 'react'
 import useLocalStorage from 'usehooks-ts/dist/esm/useLocalStorage/useLocalStorage';
 import { EXERCISEURI, LOCALSTORAGEPRESET } from '../assets/config';
 import { useAuth } from './auth';
-import { MuscleUsage, useMuscle } from './muscle';
+import { LOCALSTORAGEMUSCLES, Muscel, MuscleUsage, useMuscle } from './muscle';
 
 interface Props {
     children?: React.ReactNode;
@@ -34,17 +34,17 @@ interface ExerciseContextType {
 }
 
 const ExerciseContext = createContext<ExerciseContextType | null>(null);
+export const LOCALSTORAGEEXERCISES = LOCALSTORAGEPRESET + "exercise-list";
 
 export const ExerciseProvider = ({ children }: Props) => {
-    const [exercises, setExercises] = useLocalStorage<Exercise[]>(LOCALSTORAGEPRESET + "exercise-list", []);
+    const [exercises, setExercises] = useLocalStorage<Exercise[]>(LOCALSTORAGEEXERCISES, []);
     const auth = useAuth()!;
-    const muscleCtx = useMuscle()!;
 
-    function muscleFactory(muscleUsage: MuscleUSageResponse[]): MuscleUsage[] {
-        let result: MuscleUsage[] = [];
-        for(let i = 0; i < muscleUsage.length; i++) {
-            result.push({muscle: muscleCtx?.muscles.filter(muscle => muscle._id == muscleUsage[i].muscleId)[0]!, percent: muscleUsage[i].percent });
-        }
+    function muscleFactory(muscleUsages: MuscleUSageResponse[]): MuscleUsage[] {
+        let muscles: Muscel[] = JSON.parse(localStorage.getItem(LOCALSTORAGEMUSCLES)!);
+        let result = muscleUsages.map(muscleUsage => {
+            return { muscle: muscles.find(muscle => muscle._id == muscleUsage.muscleId)!, percent: muscleUsage.percent };
+        });
         return result;
     }
 
@@ -56,9 +56,14 @@ export const ExerciseProvider = ({ children }: Props) => {
             }
         },
             {
-                headers: { 'authorization': 'Bearer ' + auth?.token }
+                headers: { 'authorization': 'Bearer ' + auth.token }
             }).then(response => {
-                setExercises([...exercises, response.data]);
+                let newExercise: Exercise = {
+                    _id: response.data._id,
+                    name: response.data.name,
+                    muscles: muscleFactory(response.data.muscles),
+                };
+                setExercises([...exercises, newExercise]);
             }).catch(err => {
                 return err.response;
             })
@@ -67,7 +72,7 @@ export const ExerciseProvider = ({ children }: Props) => {
     async function removeExercise(ex: Exercise) {
         return await axios.delete(EXERCISEURI + "/" + ex._id,
             {
-                headers: { 'authorization': 'Bearer ' + auth?.token }
+                headers: { 'authorization': 'Bearer ' + auth.token }
             }).then(response => {
                 setExercises(exercises.filter((exercise: Exercise) => exercise._id != response.data._id));
             }).catch(err => {
@@ -79,12 +84,12 @@ export const ExerciseProvider = ({ children }: Props) => {
         const params = {
             _id: exercise._id,
             name: exercise.name,
-            muscles: exercise.muscles
+            muscles: exercise.muscles.map(musclUsage => ({ muscleId: musclUsage.muscle._id, percent: musclUsage.percent })),
         };
         return await axios.put(EXERCISEURI, {
             params,
         },{
-            headers: { 'authorization': 'Bearer ' + auth?.token }
+            headers: { 'authorization': 'Bearer ' + auth.token }
         }).then(response => {
             setExercises(exercises.map(exercise => {
                 if (exercise._id == response.data._id) {
@@ -106,7 +111,7 @@ export const ExerciseProvider = ({ children }: Props) => {
     function sync() {
         axios.get(EXERCISEURI,
             {
-                headers: { 'authorization': 'Bearer ' + auth?.token }
+                headers: { 'authorization': 'Bearer ' + auth.token }
             }).then(response => {
                 setExercises(response.data.map((exerciseRes: any) => ({ _id: exerciseRes._id, name: exerciseRes.name, muscles: muscleFactory(exerciseRes.muscles) })));
             });
