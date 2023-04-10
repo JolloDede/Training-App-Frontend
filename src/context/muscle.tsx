@@ -47,7 +47,7 @@ export const MuscleProvider = ({ children }: Props) => {
                 setMuscles([...muscles, response.data]);
             }).catch(err => {
                 return err.response;
-            })
+            });
     }
 
     async function removeMuscle(muc: Muscel) {
