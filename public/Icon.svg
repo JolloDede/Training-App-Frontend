@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <ellipse style="stroke: rgb(0, 0, 0);" cx="195" cy="201" rx="93" ry="93"/>
+  <path d="M 102 55 L 179.915 201.861 L 102 201.861 L 102 55 Z" style="stroke: rgb(0, 0, 0);" bx:shape="triangle 102 55 77.915 146.861 0 0 1@1bcfb70d"/>
+  <path d="M 288 58 L 288 204 L 210 204 L 288 58 Z" style="stroke: rgb(0, 0, 0);" bx:shape="triangle 210 58 78 146 1 0 1@6cf2ebd0"/>
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(123, 255, 0);" cx="196.189" cy="198.15" rx="68.386" ry="63.621"/>
+  <rect x="111.547" y="127.242" width="163.117" height="88.565" style="stroke: rgb(0, 0, 0);"/>
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(123, 255, 0);" cx="159.753" cy="177.971" rx="16" ry="26.996" transform="matrix(1, 0, 0.016914, 1, 79.621666, -4.337873)"/>
+  <ellipse style="stroke: rgb(0, 0, 0); fill: rgb(123, 255, 0);" cx="159.753" cy="177.971" rx="16" ry="26.996" transform="matrix(1, 0, 0.016914, 1, -12.30658, -0.974644)"/>
+</svg>

@@ -174,6 +174,7 @@
 * [ ] Order of execise Reps in workouts
 * [X] loading icon while syncing
 * [ ] better search for the exercises
+* [X] icon and tabname
 
 ### Step maybe
 * [ ] Nextjs  integration
