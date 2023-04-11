@@ -171,11 +171,10 @@
   * [X] workouts
 
 ### Step 13
-* [ ] Order of execise Reps in workouts
 * [X] loading icon while syncing
-* [ ] better search for the exercises
 * [X] icon and tabname
+* [ ] Nextjs integration
 
-### Step maybe
-* [ ] Nextjs  integration
-  * [ ] do i need it?
+### Step 14
+* [ ] better search for the exercises
+* [ ] Order of execise Reps in workouts
